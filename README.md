@@ -1,5 +1,5 @@
 A small react app to help plan a release in our version of Agile.
-A small react app to help plan a release in our version of Agile.
+A small react app to help plan a release in our version of Agile.  
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
