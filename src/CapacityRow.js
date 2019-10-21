@@ -5,10 +5,9 @@ import Cell from './Cell.js';
 function CapacityRow(props) {
   return (
     <React.Fragment>
-      {props.resourceName} : 
-
-      {props.availableDaysInWeek.map((value, index) => {
-        return <Cell key={index} data={value} />
+      {props.resource.name} ({props.resource.skill}) :  
+      {props.resource.capacity.map((value, index) => {
+        return <Cell key={index} data={value.availableDays} />
       })}
       </React.Fragment>
   );

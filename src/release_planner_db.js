@@ -1,23 +1,52 @@
 const db = {
-  "devsCapacity": {
-    "teams": {
-      "spiders": {
-        "shay": {
-          "skill": "fe",
-          "capacity": {
-            "20/10/2019": 5,
-            "27/10/2019": 5
+  devsCapacity: {
+    teams: [
+      {
+        name: "spiders",
+        members: [
+          { 
+            name: "shay",
+            skill: "FE",
+            capacity: [
+            { date:"20/10/2019", availableDays: 5},
+            { date:"27/10/2019", availableDays: 5}
+            
+            ]
+          },
+          { 
+            name: "lior",
+            skill: "FS",
+            capacity: [
+            { date:"20/10/2019", availableDays: 4},
+            { date:"27/10/2019", availableDays: 3}
+            
+            ]
           }
-        },
-        "lior": {
-          "skill": "fs",
-          "capacity": {
-            "20/10/2019": 5,
-            "27/10/2019": 5
+        ]
+      },
+      {
+        name: "sharks",
+        members: [
+          { 
+            name: "Jenny",
+            skill: "FE",
+            capacity: [
+            { date:"20/10/2019", availableDays: 1},
+            { date:"27/10/2019", availableDays: 1}
+            
+            ]
+          },
+          { 
+            name: "Shanny",
+            skill: "FS",
+            capacity: [
+            { date:"20/10/2019", availableDays: 5},
+            { date:"27/10/2019", availableDays: 5}
+            ]
           }
-        }
+        ]
       }
-    }
+    ]
   },
   "plans": {
     "teams": {

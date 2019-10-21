@@ -4,35 +4,32 @@ import './App.css';
 import CapacityRow from './CapacityRow';
 import Db from './release_planner_db.js';
 
-function App() {
-  const spiders = Db.devsCapacity.teams.spiders;
-  const availableDaysInWeek_forShay = []
-  for (let sprint in spiders.shay.capacity) {
-    availableDaysInWeek_forShay.push(spiders.shay.capacity[sprint]);
+function getDevsList() {
+  const devs = [];
+  for (let team of Db.devsCapacity.teams) {
+    for (let member of team.members) {
+      devs.push(member);
+    }
   }
-  console.log('ddddddddddddd', spiders.shay);
-  
-  const availableDaysInWeek = [5,3,2,5];
+  return devs;
+}
+
+function App() {
+  const devs = getDevsList();
+  console.log('ddddddddddddd', devs);
+
   return (    
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React2
-        </a> */}
-        <CapacityRow resourceName="Ron Ganot" availableDaysInWeek={availableDaysInWeek_forShay} />
-        </header>
+      <header className="App-header">        
+        {devs.map((value, index) => {
+        return <CapacityRow key={index} resource={value} />
+      })}
+      </header>
       
     </div>
   );
 }
 
 export default App;
+
+
