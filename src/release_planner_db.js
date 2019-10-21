@@ -1,5 +1,5 @@
 const db = {
-  devsCapacity: {
+w  devsCapacity: {
     teams: [
       {
         name: "spiders",

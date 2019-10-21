@@ -8,6 +8,7 @@ function getDevsList() {
   const devs = [];
   for (let team of Db.devsCapacity.teams) {
     for (let member of team.members) {
+      member.team = team.name;
       devs.push(member);
     }
   }
@@ -16,8 +17,7 @@ function getDevsList() {
 
 function App() {
   const devs = getDevsList();
-  console.log('ddddddddddddd', devs);
-
+  
   return (    
     <div className="App">
       <header className="App-header">        
