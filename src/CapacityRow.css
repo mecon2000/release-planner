@@ -1,5 +1,7 @@
 .CapacityRow {
   text-align: center;
-  color: red;
+  color: yellow; 
+  border-color: thick solid #0000FF;
+
 }
 /* TODO this is not working */

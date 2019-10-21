@@ -16,15 +16,15 @@ function getDevsList() {
 
 function App() {
   const devs = getDevsList();
-  
-  return (    
+
+  return (
     <div className="App">
-      <header className="App-header">        
+      <header className="App-header">
         {devs.map((value, index) => {
-        return <CapacityRow key={index} resource={value} />
-      })}
+          return <CapacityRow key={index} resource={value} />
+        })}
       </header>
-      
+
     </div>
   );
 }

@@ -5,11 +5,11 @@ import Cell from './Cell.js';
 function CapacityRow(props) {
   return (
     <React.Fragment>
-      {props.resource.team}, {props.resource.name} ({props.resource.skill}) :  
+      {props.resource.team}, {props.resource.name} ({props.resource.skill}) :
       {props.resource.capacity.map((value, index) => {
         return <Cell key={index} data={value.availableDays} />
       })}
-      </React.Fragment>
+    </React.Fragment>
   );
 }
 
