@@ -7,10 +7,10 @@ import Db from './release_planner_db.js';
 function App() {
   const spiders = Db.devsCapacity.teams.spiders;
   const availableDaysInWeek_forShay = []
-  for (let sprint in spidersshay.capacity) {
-    availableDaysInWeek_forShay.push(shay.capacity[sprint]);
+  for (let sprint in spiders.shay.capacity) {
+    availableDaysInWeek_forShay.push(spiders.shay.capacity[sprint]);
   }
-  console.log('ddddddddddddd', shay);
+  console.log('ddddddddddddd', spiders.shay);
   
   const availableDaysInWeek = [5,3,2,5];
   return (    
