@@ -1,0 +1,7 @@
+.CapacityRow {
+  text-align: center;
+  color: yellow; 
+  border:2px solid white;
+  padding: 5px;
+  display:inline;
+} 
