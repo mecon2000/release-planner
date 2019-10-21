@@ -1,5 +1,7 @@
 .Cell {
   text-align: center;
   color: red;
-  border-color: thick solid #0000FF;
+  border:1px solid white;
+  padding: 5px;
+  display:inline;
 }
