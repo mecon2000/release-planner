@@ -1,10 +1,19 @@
-A small react app to help plan a release in our version of Agile.
 A small react app to help plan a release in our version of Agile.  
+
+Release planner tasks:
+1.	Capacity table: Show an empty table, with names (y axis) and weeks (header should contain sprints). 
+2.	Table should be filled with data taken from json ( how should the DB look?)
+3.	Table should be editable
+4.	Table should write to json after each change
+5.	Planning table: An empty table with with sprints (y axis) and names.
+6.	Data for planning table should be taken from json. 
+7.	Epics table: each row is an epic, coloumns are days needed for FE, BE, FS, Core, Element, ALG.
+8.	Data should be served and saved via node.js server instead of local json.
+9.	Add a button “re-calculate” to fill planning table.
+
+
+--------------------------------------------------------------------------------------------------------
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-
-
 ## Available Scripts
 
 In the project directory, you can run:
