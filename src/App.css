@@ -21,9 +21,6 @@ body {
   color: #09d3ac;
 }
 
-
-
-
 .Table {
   display: grid;
   grid-template-columns:  repeat(5, [col] 150px ) ;
@@ -47,4 +44,12 @@ body {
 h1 {
   color: rgba(255, 255, 255, 0.753);
   
+}
+
+.responsiveTable td {
+  color: white;
+}
+
+.responsiveTable thead tr {
+  color: salmon;
 }

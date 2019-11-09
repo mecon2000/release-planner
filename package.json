@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "react-super-responsive-table": "^5.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -15,7 +16,7 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }, 
+  },
   "browserslist": {
     "production": [
       ">0.2%",
