@@ -24,7 +24,7 @@ body {
 
 
 
-.CapacityTable {
+.Table {
   display: grid;
   grid-template-columns:  repeat(5, [col] 150px ) ;
   grid-template-rows: repeat(3, [row] auto  );

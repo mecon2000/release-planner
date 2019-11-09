@@ -1,4 +1,9 @@
-const db = {
+export const db = {
+  groups: ['Core', 'Web', 'Scanner'],
+}
+
+
+export const db_older = {
   devsCapacity: {
     teams: [
       {
@@ -94,5 +99,3 @@ const db = {
     }
   }
 };
-
-export default db;
