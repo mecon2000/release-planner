@@ -1,4 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button';
+
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './App.css';
 import { db } from './release_planner_db.js';
@@ -61,6 +64,10 @@ function App() {
           })}
         </Tbody>
       </Table>
+
+      <Button variant="contained" color="primary">
+        Hello World
+      </Button>
     </div >
   );
 }
