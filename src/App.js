@@ -19,28 +19,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Using CapacityRow</h1>
-      <header className="App-header">
-        {devs.map((value, index) => {
-          return <CapacityRow key={index} resource={value} />
-        })}
-      </header>
-
-
-      <hr /><h1>Using hardcoded cells</h1>
-      <div className="CapacityTable">
-        <div className="RowHeader">Rong</div>
-        <div className="OneCell">1</div>
-        <div className="OneCell">2</div>
-        <div className="OneCell">3</div>
-        <div className="RowHeader">Shay</div>
-        <div className="OneCell">4</div>
-        <div className="OneCell">5</div>
-        <div className="OneCell">6</div>
-        <div className="OneCell">7</div>
-      </div>
-
-
       <hr /><h1>Using DB cells</h1>
       <div className="CapacityTable">
         {devs.map((value, index) => {
