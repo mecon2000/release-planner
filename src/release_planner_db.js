@@ -1,12 +1,19 @@
 export const db = {
-  groups: ['Core', 'Web', 'Scanner'],
-  teams: [
-    { name: 'Spiders', group: 'Web' },
-    { name: 'Sharks', group: 'Web' },
-    { name: 'Threads', group: 'Web' },
-    { name: 'Team13', group: 'Scanner' },
-    { name: 'Seals', group: 'Scanner' },
-  ]
+  groups: {
+    data: ['Core', 'Web', 'Scanner'],
+    enableEditing: false
+  },
+  teams: {
+    data:
+      [
+        { name: 'Spiders', group: 'Web' },
+        { name: 'Sharks', group: 'Web' },
+        { name: 'Threads', group: 'Web' },
+        { name: 'Team13', group: 'Scanner' },
+        { name: 'Seals', group: 'Scanner' },
+      ],
+    enableEditing: true
+  }
 }
 
 

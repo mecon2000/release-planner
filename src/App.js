@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -13,7 +12,7 @@ function App() {
     <div className="App">
       <hr /><h1>Groups:</h1>
       <div cla ssName="Table">
-        {db.groups.map((groupName, index) => {
+        {db.groups.data.map((groupName, index) => {
           return (
             <div className="RowHeader" key={index}>
               {groupName}
@@ -32,7 +31,7 @@ function App() {
           </Tr>
         </Thead>
         <Tbody>
-          {db.groups.map((groupName, index) => {
+          {db.groups.data.map((groupName, index) => {
             return (
               <Tr>
                 <Td key={index}>{groupName}</Td>
@@ -54,20 +53,22 @@ function App() {
           </Tr>
         </Thead>
         <Tbody>
-          {db.teams.map((team, index) => {
+          {db.teams.data.map((team, index) => {
             return (
               <Tr>
                 <Td key={index}>{team.name}</Td>
-                <Td key={index + db.teams.length}>{team.group}</Td>
+                <Td key={index + db.teams.data.length}>{team.group}</Td>
               </Tr>
             );
           })}
         </Tbody>
       </Table>
 
+      {db.teams.enableEditing ? (
       <Button variant="contained" color="primary">
-        Hello World
-      </Button>
+        Add
+      </Button>) : "" }
+
     </div >
   );
 }
