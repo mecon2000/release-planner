@@ -10,18 +10,6 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 function App() {
   return (
     <div className="App">
-      <hr /><h1>Groups:</h1>
-      <div cla ssName="Table">
-        {db.groups.data.map((groupName, index) => {
-          return (
-            <div className="RowHeader" key={index}>
-              {groupName}
-            </div>
-          );
-        })};
-      </div>
-
-      <hr />
       <h1>Groups:</h1>
       <div className="responsiveTable"></div>
       <Table>
@@ -65,9 +53,9 @@ function App() {
       </Table>
 
       {db.teams.enableEditing ? (
-      <Button variant="contained" color="primary">
-        Add
-      </Button>) : "" }
+        <Button variant="contained" color="primary">
+          Add
+      </Button>) : ""}
 
     </div >
   );
