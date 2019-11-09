@@ -1,5 +1,12 @@
 export const db = {
   groups: ['Core', 'Web', 'Scanner'],
+  teams: [
+    { name: 'Spiders', group: 'Web' },
+    { name: 'Sharks', group: 'Web' },
+    { name: 'Threads', group: 'Web' },
+    { name: 'Team13', group: 'Scanner' },
+    { name: 'Seals', group: 'Scanner' },
+  ]
 }
 
 
@@ -9,22 +16,22 @@ export const db_older = {
       {
         name: "spiders",
         members: [
-          { 
+          {
             name: "shay",
             skill: "FE",
             capacity: [
-            { date:"20/10/2019", availableDays: 5},
-            { date:"27/10/2019", availableDays: 5}
-            
+              { date: "20/10/2019", availableDays: 5 },
+              { date: "27/10/2019", availableDays: 5 }
+
             ]
           },
-          { 
+          {
             name: "lior",
             skill: "FS",
             capacity: [
-            { date:"20/10/2019", availableDays: 4},
-            { date:"27/10/2019", availableDays: 3}
-            
+              { date: "20/10/2019", availableDays: 4 },
+              { date: "27/10/2019", availableDays: 3 }
+
             ]
           }
         ]
@@ -32,21 +39,21 @@ export const db_older = {
       {
         name: "sharks",
         members: [
-          { 
+          {
             name: "Jenny",
             skill: "FE",
             capacity: [
-            { date:"20/10/2019", availableDays: 1},
-            { date:"27/10/2019", availableDays: 1}
-            
+              { date: "20/10/2019", availableDays: 1 },
+              { date: "27/10/2019", availableDays: 1 }
+
             ]
           },
-          { 
+          {
             name: "Shanny",
             skill: "FS",
             capacity: [
-            { date:"20/10/2019", availableDays: 5},
-            { date:"27/10/2019", availableDays: 5}
+              { date: "20/10/2019", availableDays: 5 },
+              { date: "27/10/2019", availableDays: 5 }
             ]
           }
         ]

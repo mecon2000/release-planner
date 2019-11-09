@@ -2,7 +2,7 @@ A small react app to help plan a release in our version of Agile.
 
 Which entities do we have?
 Group {Name}
-Team {Parent: group}
+Team {Name, Parent: group}
 Resource {Parent: Team, Skill, Capacity}
 Release {StartDate, EndDate}
 Epic {Parent: release, Program, SkillSetEffort, Parallel, Priority}

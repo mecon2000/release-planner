@@ -19,7 +19,8 @@ function App() {
         })};
       </div>
 
-      <hr /><h1>Groups:</h1>
+      <hr />
+      <h1>Groups:</h1>
       <div className="responsiveTable"></div>
       <Table>
         <Thead>
@@ -37,7 +38,30 @@ function App() {
           })}
         </Tbody>
       </Table>
-    </div>
+
+      <hr />
+
+      <h1>Teams:</h1>
+      <div className="responsiveTable"></div>
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Belongs to</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {db.teams.map((team, index) => {
+            return (
+              <Tr>
+                <Td key={index}>{team.name}</Td>
+                <Td key={index + db.teams.length}>{team.group}</Td>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+    </div >
   );
 }
 
