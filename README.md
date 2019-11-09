@@ -1,9 +1,22 @@
 A small react app to help plan a release in our version of Agile.
-A small react app to help plan a release in our version of Agile.  
+
+Which entities do we have?
+Group {Name}
+Team {Parent: group}
+Resource {Parent: Team, Skill, Capacity}
+Release {StartDate, EndDate}
+Epic {Parent: release, Program, SkillSetEffort, Parallel, Priority}
+Sprint {StartDate, EndDate}
+Dependency {DependantTeam, BlockingTeam}
+
+
+
+
+
+
+
+-------------------------------------------------------------------------
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-
 
 ## Available Scripts
 
