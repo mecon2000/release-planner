@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Input from '@material-ui/core/Input';
 
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './App.css';
@@ -47,13 +48,13 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: 'black',
+    backgroundColor: 'gray',
   },
 }));
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -80,7 +81,7 @@ export default function SimpleTabs() {
             {db.groups.data.map((groupName, index) => {
               return (
                 <Tr>
-                  <Td key={index}>{groupName}</Td>
+                  <Td key={'group'+index}>{groupName}</Td>
                 </Tr>
               );
             })}
@@ -94,16 +95,16 @@ export default function SimpleTabs() {
         <Table>
           <Thead>
             <Tr>
-              <Th>Name</Th>
-              <Th>Belongs to</Th>
+              <Th width="10%">Name</Th>
+              <Th width="90%" >Belongs to</Th>
             </Tr>
           </Thead>
           <Tbody>
             {db.teams.data.map((team, index) => {
               return (
                 <Tr>
-                  <Td key={index}>{team.name}</Td>
-                  <Td key={index + db.teams.data.length}>{team.group}</Td>
+                  <Td key={index} width="10%" >{team.name}</Td>
+                  <Td key={index + db.teams.data.length} width="90%" >{team.group}</Td>
                 </Tr>
               );
             })}
@@ -111,9 +112,23 @@ export default function SimpleTabs() {
         </Table>
 
         {db.teams.enableEditing ? (
-          <Button variant="contained" color="primary">
-            Add
-      </Button>) : ""}
+          <React.Fragment className="addingNewItem">
+            <Input 
+              placeholder="add new"
+              className={classes.input}
+              color="primary"
+              variant="outlined"
+              required={true}
+              inputProps={{
+                'aria-label': 'description',
+              }}
+            />
+            <Button variant="contained" color="primary">
+              Add
+            </Button>
+          </React.Fragment>
+        ) : ""}
+
       </TabPanel>
 
 

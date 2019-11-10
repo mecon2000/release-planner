@@ -26,7 +26,15 @@ body {
   grid-template-columns:  repeat(5, [col] 150px ) ;
   grid-template-rows: repeat(3, [row] auto  );
   border:2px solid white;
+  
+}
 
+Th {
+  text-align:left;
+}
+
+Td {
+  text-align:left;
 }
 
 .OneCell {
@@ -52,4 +60,8 @@ h1 {
 
 .responsiveTable thead tr {
   color: salmon;
+}
+
+.addingNewItem {
+  padding: 100px;
 }
