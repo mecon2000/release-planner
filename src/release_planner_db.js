@@ -1,4 +1,4 @@
-export const db = {
+export const initialDb = {
   groups: {
     data: ['Core', 'Web', 'Scanner'],
     enableEditing: false
