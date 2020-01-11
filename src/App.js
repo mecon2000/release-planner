@@ -1,17 +1,18 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Input from '@material-ui/core/Input';
+import { cloneDeep } from 'lodash';
 
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './App.css';
-import { db } from './release_planner_db.js';
+import { initialDb } from './release_planner_db.js';
+import { DataAdder } from './DataAdder.js';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 
 
@@ -54,22 +55,30 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(1);
+  const [selectedTab, setSelectedTab] = React.useState(1);
+  const [db, setDb] = React.useState(initialDb);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
+  const handleAddingTeam = (event, data) => {
+    //TODO must be a better way
+    let newDb= cloneDeep(db);
+    newDb.teams.data.push({name: data.field0, group: data.field1});
+    setDb(newDb);
   };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
           <Tab label="Groups" {...a11yProps(0)} />
           <Tab label="Teams" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={selectedTab} index={0}>
         <div className="responsiveTable"></div>
         <Table>
           <Thead>
@@ -90,7 +99,7 @@ export default function SimpleTabs() {
       </TabPanel>
 
 
-      <TabPanel value={value} index={1}>
+      <TabPanel value={selectedTab} index={1}>
         <div className="responsiveTable"></div>
         <Table>
           <Thead>
@@ -110,29 +119,16 @@ export default function SimpleTabs() {
             })}
           </Tbody>
         </Table>
-
-        {db.teams.enableEditing ? (
-          <React.Fragment className="addingNewItem">
-            <Input 
-              placeholder="add new"
-              className={classes.input}
-              color="primary"
-              variant="outlined"
-              required={true}
-              inputProps={{
-                'aria-label': 'description',
-              }}
-            />
-            <Button variant="contained" color="primary">
-              Add
-            </Button>
-          </React.Fragment>
-        ) : ""}
-
+        {db.teams.enableEditing ? 
+          <DataAdder 
+            onAddClicked={handleAddingTeam} 
+            fields={["Add a team name","belongs to which group?"]}
+          />  
+          : ""}
       </TabPanel>
 
 
-      <TabPanel value={value} index={2}>
+      <TabPanel value={selectedTab} index={2}>
         Item Three
       </TabPanel>
     </div>
