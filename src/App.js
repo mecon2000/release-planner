@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,6 +8,7 @@ import { cloneDeep } from 'lodash';
 
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './App.css';
+import { useStyles } from './GeneralStyles.js'
 import { TabPanel } from './TabPanel.js';
 import { initialDb } from './release_planner_db.js';
 import { DataAdder } from './DataAdder.js';
@@ -20,13 +20,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: 'gray',
-  },
-}));
 
 export default function SimpleTabs() {
   const classes = useStyles();

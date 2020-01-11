@@ -1,18 +1,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 
+import { useStyles } from './GeneralStyles.js'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import './App.css';
 
-//TODO this is a copy from apps. unify!!
-const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-      backgroundColor: 'gray',
-    },
-  }));
 
 export function DataAdder(props) {
   const classes = useStyles();
