@@ -4,16 +4,16 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import { cloneDeep } from "lodash";
-
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "./App.css";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
-import { DataAdder } from "./DataAdder.js";
+import { Teams } from "./Tabs/Teams.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
+
+//props for accessibility:
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -28,13 +28,6 @@ export default function SimpleTabs() {
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
-  };
-
-  const handleAddingTeam = (event, data) => {
-    //TODO must be a better way
-    let newDb = cloneDeep(db);
-    newDb.teams.data.push({ name: data.field0, group: data.field1 });
-    setDb(newDb);
   };
 
   return (
@@ -71,37 +64,8 @@ export default function SimpleTabs() {
       </TabPanel>
 
       <TabPanel value={selectedTab} index={1}>
-        <div className="responsiveTable"></div>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th width="10%">Name</Th>
-              <Th width="90%">Belongs to</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {db.teams.data.map((team, index) => {
-              return (
-                <Tr key={index}>
-                  <Td key={index} width="10%">
-                    {team.name}
-                  </Td>
-                  <Td key={index} width="90%">
-                    {team.group}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-        {db.teams.enableEditing ? (
-          <DataAdder
-            onAddClicked={handleAddingTeam}
-            fields={["Add a team name", "belongs to which group?"]}
-          />
-        ) : (
-          ""
-        )}
+        <Teams/>
+        
       </TabPanel>
 
       <TabPanel value={selectedTab} index={2}>
