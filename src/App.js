@@ -89,7 +89,7 @@ export default function SimpleTabs() {
           <Tbody>
             {db.groups.data.map((groupName, index) => {
               return (
-                <Tr>
+                <Tr key={index}>
                   <Td key={'group'+index}>{groupName}</Td>
                 </Tr>
               );
@@ -111,9 +111,9 @@ export default function SimpleTabs() {
           <Tbody>
             {db.teams.data.map((team, index) => {
               return (
-                <Tr>
+                <Tr key={index}>
                   <Td key={index} width="10%" >{team.name}</Td>
-                  <Td key={index + db.teams.data.length} width="90%" >{team.group}</Td>
+                  <Td key={index} width="90%" >{team.group}</Td>
                 </Tr>
               );
             })}
