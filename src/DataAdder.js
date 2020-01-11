@@ -26,6 +26,7 @@ export function DataAdder(props) {
   const fieldElements = [];
   props.fields.forEach((field,index) => { fieldElements.push(
   <Input 
+    key={"key"+index}
     name={"field"+index}
     onChange={handleInputChanged}
     placeholder={field}
