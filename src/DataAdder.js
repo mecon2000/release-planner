@@ -14,22 +14,13 @@ export function DataAdder(props) {
     inputData[e.target.name] = e.target.value;
     setinputData(inputData);
   };
-  const clearFields = () =>{
-    //TODO work still in progress, finish this
-    // setinputData({});
-    
-    // props.fields.forEach((placeholderText, index)=>{
-    //   let element = document.getElementsByName("addInputField" + index);
-    //   if (element.length !== 0) element[0].value = "";
-    // });
-  }
 
   const fieldElements = [];
   props.fields.forEach((placeholderText, index) => {
     fieldElements.push(
       <Input
-        key={"addInputKey" + index}
-        name={"addInputField" + index}
+        key={"key" + index}
+        name={"field" + index}
         onChange={handleInputChanged}
         placeholder={placeholderText}
         className={classes.input}
@@ -45,7 +36,7 @@ export function DataAdder(props) {
     <React.Fragment>
       {fieldElements}
       <Button
-        onClick={e => {props.onAddClicked(e, inputData); clearFields();}}
+        onClick={e => props.onAddClicked(e, inputData)}
         variant="contained"
         color="primary"
       >
