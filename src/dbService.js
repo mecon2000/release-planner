@@ -7,7 +7,7 @@ require("firebase/firestore");
 
 let fireBaseDB = null;
 
-export const connectToDb = () => {
+ const connectToDb = () => {
   firebase.initializeApp({
     apiKey: "AIzaSyA9GWdpSk-eAFYzaYCdsqjNagBnZy6Z9sk",
     authDomain: "releaseplanner-902dc.firebaseapp.com",
@@ -16,7 +16,7 @@ export const connectToDb = () => {
   fireBaseDB = firebase.firestore();
 };
 
-export const getFullDB = async () => {
+ const getFullDB = async () => {
   let db = await fireBaseDB
     .collection("db")
     .get()
@@ -32,7 +32,7 @@ export const getFullDB = async () => {
   return db;
 };
 
-export const updateFullDB = async newDB => {
+ const updateFullDB = async newDB => {
   await fireBaseDB
     .collection("db")
     .doc("everything")
@@ -42,7 +42,7 @@ export const updateFullDB = async newDB => {
     });
 };
 
-export const resetToInitialDB = async () => {
+ const resetToInitialDB = async () => {
   await fireBaseDB
     .collection("db")
     .doc("everything")
@@ -52,26 +52,35 @@ export const resetToInitialDB = async () => {
     });
 };
 
-export const getTeams = async () => {
+ const getTeams = async () => {
   const db = await getFullDB();
   return db.teams.data;
 }
 
-export const isTeamsEnabledForEditing = async () => {
+ const isTeamsEnabledForEditing = async () => {
   const db = await getFullDB();
   return db.teams.enableEditing;
 }
 
 
-export const addTeam = async (newTeam, group) => {
+ const addTeam = async (newTeam, group) => {
   let db = await getFullDB();
   db.teams.data.push({ name: newTeam, group });
   await updateFullDB(db);
 }
 
-export const getGroups = async () => {
+ const getGroups = async () => {
   const db = await getFullDB();
   return db.groups.data;
 }
 
-export const
+ export const dbService = {
+  connectToDb,
+  getFullDB,
+  updateFullDB,
+  resetToInitialDB,
+  getTeams,
+  isTeamsEnabledForEditing,
+  addTeam,
+  getGroups,
+}
