@@ -57,6 +57,12 @@ export const getTeams = async () => {
   return db.teams.data;
 }
 
+export const isTeamsEnabledForEditing = async () => {
+  const db = await getFullDB();
+  return db.teams.enableEditing;
+}
+
+
 export const addTeam = async (newTeam, group) => {
   let db = await getFullDB();
   db.teams.data.push({ name: newTeam, group });

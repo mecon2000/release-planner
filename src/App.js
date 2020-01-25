@@ -6,12 +6,14 @@ import Tab from "@material-ui/core/Tab";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "./App.css";
-import { connectToDb, getFullDB, updateFullDB, resetToInitialDB, getTeams, addTeam, getGroups } from "./dbHelper.js";
+import { connectToDb} from "./dbHelper.js";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
 import { Teams } from "./Tabs/Teams.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+
+connectToDb();
 
 //TODO this should become several unit-tests
 // async function playWithDb() {
