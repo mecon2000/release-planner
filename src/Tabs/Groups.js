@@ -15,13 +15,6 @@ export function Groups() {
     fetchData();
   }, []);
 
-  React.useEffect(() => {
-    console.log(
-      `%cmounted or updated. teams=${groups.length}`,
-      "background: yellow; color: red;"
-    );
-  }, [groups]);
-
   return (
     <React.Fragment>
       <div className="responsiveTable"></div>

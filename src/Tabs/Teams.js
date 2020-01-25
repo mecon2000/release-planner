@@ -13,7 +13,6 @@ export function Teams() {
 
   //TODO should wait with rendering until actually getting data?
   React.useEffect(() => {
-    console.log("mounted, WILL BE CALLED ONLY ONCE");
     const fetchData = async () => {
       const t = await dbService.getTeams();
       setTeams(t);
@@ -22,13 +21,6 @@ export function Teams() {
     };
     fetchData();
   }, []);
-
-  React.useEffect(() => {
-    console.log(
-      `%cmounted or updated. teams=${teams.length}, canAddATeam=${canAddATeam}`,
-      "background: yellow; color: red;"
-    );
-  }, [teams, canAddATeam]);
 
   const handleAddingTeam = (event, data) => {
     let newTeamsList = cloneDeep(teams);
