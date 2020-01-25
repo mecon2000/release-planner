@@ -2,16 +2,14 @@ import React from "react";
 import { cloneDeep } from "lodash";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-//import "./App.css";
 import { dbService } from "../dbService.js";
 import { DataAdder } from "./../DataAdder.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
 export function Teams() {
-  const [teams, setTeams] = React.useState([]); //getTeams());
-  const [canAddATeam, setCanAddATeam] = React.useState(false); //isTeamsEnabledForEditing());
+  const [teams, setTeams] = React.useState([]); 
+  const [canAddATeam, setCanAddATeam] = React.useState(false);
 
-  //TODO should wait with rendering until actually getting data?
   React.useEffect(() => {
     const fetchData = async () => {
       const t = await dbService.getTeams();
