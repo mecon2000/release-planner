@@ -25,12 +25,11 @@ export const getDB = async () => {
     // })
 
     .then(querySnapshot => {
-      let mydata = []; 
+      let result; 
       querySnapshot.forEach(doc => {
-        //console.log(`${doc.id} => ${doc.data()}`);
-        if (doc && doc.data()) mydata.push(doc.data());
+        if (doc && doc.data()) result = doc.data();
       });
-      return mydata;
+      return result;
     });
 
     console.log("inside getDB");
@@ -41,10 +40,7 @@ export const getDB = async () => {
 export const updateDB = async newDB => {
   await fireBaseDB
     .collection("db")
-    .add(newDB)
-    .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-    })
+    .doc("everything").set(newDB)
     .catch(function(error) {
       console.error("Error adding document: ", error);
     });

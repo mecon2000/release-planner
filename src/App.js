@@ -20,12 +20,11 @@ async function playWithDb() {
 
   let someDB = await getDB();
   console.log(someDB);
+  let newDB = someDB;
+  newDB.born = newDB.born+1; 
+
   console.log("2-------");
-  await updateDB({
-    first: "RONNIE",
-    last: "GA",
-    born: 1815
-  });
+  await updateDB(newDB);
   console.log("e-------");
 }
 
