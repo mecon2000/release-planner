@@ -11,7 +11,7 @@ import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
 import { Teams } from "./Tabs/Teams.js";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import { Groups } from "./Tabs/Groups.js";
 
 dbService.connectToDb();
 
@@ -70,27 +70,11 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={selectedTab} index={0}>
-        <div className="responsiveTable"></div>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {db.groups.data.map((groupName, index) => {
-              return (
-                <Tr key={index}>
-                  <Td key={"group" + index}>{groupName}</Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
+        <Groups/>
       </TabPanel>
 
       <TabPanel value={selectedTab} index={1}>
-        <Teams />
+        <Teams/>
       </TabPanel>
 
       <TabPanel value={selectedTab} index={2}>
