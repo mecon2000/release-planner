@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "./App.css";
-import { connectToDb} from "./dbHelper.js";
+import { connectToDb} from "./dbService.js/index.js";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";

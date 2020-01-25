@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 //import "./App.css";
-import { getTeams, addTeam, isTeamsEnabledForEditing } from "./../dbHelper.js";
+import { getTeams, addTeam, isTeamsEnabledForEditing } from "../dbService.js/index.js";
 import { DataAdder } from "./../DataAdder.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
