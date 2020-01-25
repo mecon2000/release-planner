@@ -34,7 +34,7 @@ export function Teams() {
     let newTeamsList = cloneDeep(teams);
     newTeamsList.push({ name: data.field0, group: data.field1 });
     setTeams(newTeamsList);
-    addTeam(data.field0, data.field1); //TODO should be in useeffect, but howdo i differentiate with updating because of fetch?
+    addTeam(data.addInputField0, data.addInputField1); //TODO should be in useeffect, but howdo i differentiate with updating because of fetch?
   };
 
   return (
