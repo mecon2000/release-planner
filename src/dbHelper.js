@@ -16,7 +16,7 @@ export const connectToDb = () => {
   fireBaseDB = firebase.firestore();
 };
 
-export const getDB = async () => {
+export const getFullDB = async () => {
   let db = await fireBaseDB
     .collection("db")
     .get()
@@ -32,7 +32,7 @@ export const getDB = async () => {
   return db;
 };
 
-export const updateDB = async newDB => {
+export const updateFullDB = async newDB => {
   await fireBaseDB
     .collection("db")
     .doc("everything")
@@ -51,3 +51,21 @@ export const resetToInitialDB = async () => {
       console.error("Error in resetToInitialDB: ", error);
     });
 };
+
+export const getTeams = async () => {
+  const db = await getFullDB();
+  return db.teams.data;
+}
+
+export const addTeam = async (newTeam, group) => {
+  let db = await getFullDB();
+  db.teams.data.push({ name: newTeam, group });
+  await updateFullDB(db);
+}
+
+export const getGroups = async () => {
+  const db = await getFullDB();
+  return db.groups.data;
+}
+
+
