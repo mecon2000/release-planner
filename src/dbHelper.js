@@ -6,7 +6,6 @@ require("firebase/firestore");
 let fireBaseDB = null;
 
 export const connectToDb = () => {
-  // Initialize Cloud Firestore through Firebase
   firebase.initializeApp({
     apiKey: "AIzaSyA9GWdpSk-eAFYzaYCdsqjNagBnZy6Z9sk",
     authDomain: "releaseplanner-902dc.firebaseapp.com",
@@ -16,60 +15,31 @@ export const connectToDb = () => {
 };
 
 export const getDB = async () => {
-  let dd = "ronggg"; 
-  dd= await fireBaseDB
+  let db = await fireBaseDB
     .collection("db")
     .get()
-    // .then(querySnapshot => {
-    //   return querySnapshot.get().data();
-    // })
-
     .then(querySnapshot => {
-      let result; 
+      if (querySnapshot.length > 1)
+        throw new Error("expecting to have only 1 documnet!");
+      
+        let result;
       querySnapshot.forEach(doc => {
         if (doc && doc.data()) result = doc.data();
       });
       return result;
+    })
+    .catch(error => {
+      console.error("Error in getDB: ", error);
     });
-
-    console.log("inside getDB");
-    return dd;
+  return db;
 };
-
 
 export const updateDB = async newDB => {
   await fireBaseDB
     .collection("db")
-    .doc("everything").set(newDB)
+    .doc("everything")
+    .set(newDB)
     .catch(function(error) {
       console.error("Error adding document: ", error);
     });
 };
-
-
-// export const addData = dataToAdd => {
-//   fireBaseDB
-//     .collection("users")
-//     .add({
-//       first: "Ada",
-//       last: "Lovelace",
-//       born: 1815
-//     })
-//     .then(function(docRef) {
-//       console.log("Document written with ID: ", docRef.id);
-//     })
-//     .catch(function(error) {
-//       console.error("Error adding document: ", error);
-//     });
-// };
-
-// export const getData = dataToGet => {
-//   fireBaseDB
-//     .collection("users")
-//     .get()
-//     .then(querySnapshot => {
-//       querySnapshot.forEach(doc => {
-//         console.log(`${doc.id} => ${doc.data()}`);
-//       });
-//     });
-// };
