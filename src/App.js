@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "./App.css";
-import { connectToDb, getDB, updateDB } from "./dbHelper.js";
+import { connectToDb, getDB, updateDB, resetToInitialDB } from "./dbHelper.js";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
@@ -15,10 +15,11 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
 async function playWithDb() {
   connectToDb();
-  let someDB = await getDB();
-  let newDB = someDB;
-  newDB.born = newDB.born+1; 
-  await updateDB(newDB);
+  await resetToInitialDB();
+  //let someDB = await getDB();
+  //let newDB = {bla:true, blaaa:false};
+  //newDB.born = newDB.born+1; 
+  //await updateDB(newDB);
 }
 
 playWithDb();

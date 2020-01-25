@@ -1,3 +1,5 @@
+import { initialDb } from "./release_planner_db.js";
+
 //TODO can use import instead?
 const firebase = require("firebase");
 // Required for side-effects
@@ -36,6 +38,16 @@ export const updateDB = async newDB => {
     .doc("everything")
     .set(newDB)
     .catch(function(error) {
-      console.error("Error adding document: ", error);
+      console.error("Error in updateDB: ", error);
+    });
+};
+
+export const resetToInitialDB = async () => {
+  await fireBaseDB
+    .collection("db")
+    .doc("everything")
+    .set(initialDb)
+    .catch(function(error) {
+      console.error("Error in resetToInitialDB: ", error);
     });
 };
