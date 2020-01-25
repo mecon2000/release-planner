@@ -6,17 +6,30 @@ import Tab from "@material-ui/core/Tab";
 
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "./App.css";
-import { connectToDb, addData, getData }  from "./dbHelper.js"
+import { connectToDb, getDB, updateDB } from "./dbHelper.js";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
 import { Teams } from "./Tabs/Teams.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
+async function playWithDb() {
+  console.log("s-------");
+  connectToDb();
+  console.log("1-------");
 
-connectToDb();
-addData();
-getData();
+  let someDB = await getDB();
+  console.log(someDB);
+  console.log("2-------");
+  await updateDB({
+    first: "RONNIE",
+    last: "GA",
+    born: 1815
+  });
+  console.log("e-------");
+}
+
+playWithDb();
 
 //props for accessibility:
 function a11yProps(index) {
@@ -69,8 +82,7 @@ export default function SimpleTabs() {
       </TabPanel>
 
       <TabPanel value={selectedTab} index={1}>
-        <Teams/>
-        
+        <Teams />
       </TabPanel>
 
       <TabPanel value={selectedTab} index={2}>

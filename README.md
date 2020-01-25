@@ -1,4 +1,3 @@
-T
 A small react app to help plan a release in our version of Agile.
 
 Which entities do we have?
@@ -14,6 +13,8 @@ Dependency {DependantTeam, BlockingTeam}
 
 
 Release planner tasks:
+read on promises
+0.  save DB in firebase, update on each change.
 1.	Capacity table: Show an empty table, with names (y axis) and weeks (header should contain sprints). 
 2.	Table should be filled with data taken from json ( how should the DB look?)
 3.	Table should be editable
