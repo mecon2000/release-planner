@@ -14,18 +14,11 @@ import { Teams } from "./Tabs/Teams.js";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 
 async function playWithDb() {
-  console.log("s-------");
   connectToDb();
-  console.log("1-------");
-
   let someDB = await getDB();
-  console.log(someDB);
   let newDB = someDB;
   newDB.born = newDB.born+1; 
-
-  console.log("2-------");
   await updateDB(newDB);
-  console.log("e-------");
 }
 
 playWithDb();

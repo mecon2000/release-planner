@@ -19,14 +19,10 @@ export const getDB = async () => {
     .collection("db")
     .get()
     .then(querySnapshot => {
-      if (querySnapshot.length > 1)
-        throw new Error("expecting to have only 1 documnet!");
-      
-        let result;
-      querySnapshot.forEach(doc => {
-        if (doc && doc.data()) result = doc.data();
-      });
-      return result;
+      if (querySnapshot.size !== 1) {
+        throw new Error(`expecting to have exactly 1 documnet, but have ${querySnapshot.size}!`);
+      }
+      return querySnapshot.docs[0].data();
     })
     .catch(error => {
       console.error("Error in getDB: ", error);
