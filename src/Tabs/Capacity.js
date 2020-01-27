@@ -38,25 +38,39 @@ export function Capacity() {
     return weeksHeaders;
   };
 
-  const createCapacityElementsFor1Dev = capacity => {
+  //TODO no need for 1liner, eliminate
+  const saveChangedCell = async (devName, weekNumber, newNumOfDays) => {
+    await dbService.setDevCapacityFor1Week(devName, weekNumber, newNumOfDays);
+  };
+
+  const onCellKeyUp = (e, devName, weekNumber) => {
+    //TODO must be a more elegant way!
+    if (e.key === "Enter" || e.key === "Escape") {
+      e.target.textContent = e.target.textContent.substring(
+        0,
+        e.target.textContent.length
+      );
+      saveChangedCell(devName, weekNumber, e.target.textContent);
+      e.target.blur();
+    }
+  };
+  const createCapacityElementsFor1Dev = devData => {
     const capacityElements = [];
     for (let i = 1; i <= getMaxNumberOfWeeks(); i++) {
-      const cellData = capacity["w" + i] || '0';
+      const cellData = devData.capacity["w" + i] || "0";
       capacityElements.push(
-        <Td key={i} width="5%">
+        <Td
+          key={i}
+          width="5%"
+          contentEditable="true"
+          onKeyUp={e => onCellKeyUp(e, devData.name, "w" + i)}
+        >
           {cellData}
         </Td>
       );
     }
     return capacityElements;
   };
-
-  // const handleAddingTeam = (event, data) => {
-  //   let newTeamsList = cloneDeep(capacityOfDevs);
-  //   newTeamsList.push({ name: data.field0, group: data.field1 });
-  //   setCapacityOfDevs(newTeamsList);
-  //   dbService.addTeam(data.field0, data.field1); //TODO should be in useeffect, but howdo i differentiate with updating because of fetch?
-  // };
 
   //TODO width should be in a param that all adress it.
 
@@ -82,7 +96,7 @@ export function Capacity() {
                     <Td key={index} width="5%">
                       {devData.name}
                     </Td>
-                    {createCapacityElementsFor1Dev(devData.capacity)}
+                    {createCapacityElementsFor1Dev(devData)}
                   </Tr>
                 );
               })

@@ -80,6 +80,12 @@ const getCapacityOfDevs = async () => {
   return db.devs.data;
 };
 
+const setDevCapacityFor1Week = async (devName, weekNumber, newNumOfDays) => {
+  let db = await getFullDB();
+  db.devs.data.find(dev => dev.name === devName).capacity[weekNumber] = newNumOfDays;
+  await updateFullDB(db);
+};
+
 const isDevsCapacityEnabledForEditing = async () => {
   const db = await getFullDB();
   return db.devs.enableEditing;
@@ -95,5 +101,6 @@ export const dbService = {
   addTeam,
   getGroups,
   getCapacityOfDevs,
+  setDevCapacityFor1Week,
   isDevsCapacityEnabledForEditing
 };

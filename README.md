@@ -15,10 +15,11 @@ Dependency {DependantTeam, BlockingTeam}
 Release planner tasks:
 V.  read on promises
 V.  save DB in firebase, update on each change.
-V.	Capacity table: Show an empty table, with names (y axis) and weeks (header should       contain sprints). 
+V.	Capacity table: Show an empty table, with names (y axis) and weeks 
 V.	Table should be filled with data taken from json ( how should the DB look?)
-3.	Table should be editable
-4.	Table should write to json after each change
+V.	Table should be editable
+V.	Table should write to json after each change
+4.  In Capacity table, header should contain start week date, not w<number>.
 5.	Planning table: An empty table with with sprints (y axis) and names.
 6.	Data for planning table should be taken from json. 
 7.	Epics table: each row is an epic, coloumns are days needed for FE, BE, FS, Core, Element, ALG.
