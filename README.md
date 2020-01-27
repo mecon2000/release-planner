@@ -15,8 +15,8 @@ Dependency {DependantTeam, BlockingTeam}
 Release planner tasks:
 V.  read on promises
 V.  save DB in firebase, update on each change.
-1.	Capacity table: Show an empty table, with names (y axis) and weeks (header should   contain sprints). 
-2.	Table should be filled with data taken from json ( how should the DB look?)
+V.	Capacity table: Show an empty table, with names (y axis) and weeks (header should       contain sprints). 
+V.	Table should be filled with data taken from json ( how should the DB look?)
 3.	Table should be editable
 4.	Table should write to json after each change
 5.	Planning table: An empty table with with sprints (y axis) and names.

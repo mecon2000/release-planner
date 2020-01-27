@@ -7,7 +7,7 @@ require("firebase/firestore");
 
 let fireBaseDB = null;
 
- const connectToDb = () => {
+const connectToDb = () => {
   firebase.initializeApp({
     apiKey: "AIzaSyA9GWdpSk-eAFYzaYCdsqjNagBnZy6Z9sk",
     authDomain: "releaseplanner-902dc.firebaseapp.com",
@@ -16,13 +16,15 @@ let fireBaseDB = null;
   fireBaseDB = firebase.firestore();
 };
 
- const getFullDB = async () => {
+const getFullDB = async () => {
   let db = await fireBaseDB
     .collection("db")
     .get()
     .then(querySnapshot => {
       if (querySnapshot.size !== 1) {
-        throw new Error(`expecting to have exactly 1 documnet, but have ${querySnapshot.size}!`);
+        throw new Error(
+          `expecting to have exactly 1 documnet, but have ${querySnapshot.size}!`
+        );
       }
       return querySnapshot.docs[0].data();
     })
@@ -32,7 +34,7 @@ let fireBaseDB = null;
   return db;
 };
 
- const updateFullDB = async newDB => {
+const updateFullDB = async newDB => {
   await fireBaseDB
     .collection("db")
     .doc("everything")
@@ -42,7 +44,7 @@ let fireBaseDB = null;
     });
 };
 
- const resetToInitialDB = async () => {
+const resetToInitialDB = async () => {
   await fireBaseDB
     .collection("db")
     .doc("everything")
@@ -52,29 +54,38 @@ let fireBaseDB = null;
     });
 };
 
- const getTeams = async () => {
+const getTeams = async () => {
   const db = await getFullDB();
   return db.teams.data;
-}
+};
 
- const isTeamsEnabledForEditing = async () => {
+const isTeamsEnabledForEditing = async () => {
   const db = await getFullDB();
   return db.teams.enableEditing;
-}
+};
 
-
- const addTeam = async (newTeam, group) => {
+const addTeam = async (newTeam, group) => {
   let db = await getFullDB();
   db.teams.data.push({ name: newTeam, group });
   await updateFullDB(db);
-}
+};
 
- const getGroups = async () => {
+const getGroups = async () => {
   const db = await getFullDB();
   return db.groups.data;
-}
+};
 
- export const dbService = {
+const getCapacityOfDevs = async () => {
+  const db = await getFullDB();
+  return db.devs.data;
+};
+
+const isDevsCapacityEnabledForEditing = async () => {
+  const db = await getFullDB();
+  return db.devs.enableEditing;
+};
+
+export const dbService = {
   connectToDb,
   getFullDB,
   updateFullDB,
@@ -83,4 +94,6 @@ let fireBaseDB = null;
   isTeamsEnabledForEditing,
   addTeam,
   getGroups,
-}
+  getCapacityOfDevs,
+  isDevsCapacityEnabledForEditing
+};
