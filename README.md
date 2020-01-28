@@ -1,19 +1,17 @@
 A small react app to help plan a release in our version of Agile.
 
-Which entities do we have?
-Group {Name}
-Team {Name, Parent: group}
-Resource {Parent: Team, Skill, Capacity}
-Release {StartDate, EndDate}
-Epic {Parent: release, Program, SkillSetEffort, Parallel, Priority}
-Sprint {StartDate, EndDate}
-Dependency {DependantTeam, BlockingTeam}
+```Which entities do we have?```
+1. Group {Name}
+2. Team {Name, Parent: group}
+3. Resource {Parent: Team, Skill, Capacity}
+4. Release {StartDate, EndDate}
+5. Epic {Parent: release, Program, SkillSetEffort, Parallel, Priority}
+6. Sprint {StartDate, EndDate}
+7. Dependency {DependantTeam, BlockingTeam}
 
+----
 
-
-
-
-Release planner tasks:
+```Release planner tasks:```
 1. V read on promises
 2. V save DB in firebase, update on each change.
 3. V	Capacity table: Show an empty table, with names (y axis) and weeks 
