@@ -62,7 +62,7 @@ export function Capacity() {
         <Td
           key={i}
           width="5%"
-          contentEditable="true"
+          contentEditable={canEditCapacity}
           onKeyUp={e => onCellKeyUp(e, devData.name, "w" + i)}
         >
           {cellData}
