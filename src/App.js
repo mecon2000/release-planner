@@ -9,7 +9,6 @@ import './App.css';
 import { dbService } from './dbService.js';
 import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './TabPanel.js';
-import { initialDb } from './release_planner_db.js';
 import { GenericTable } from './Tabs/GenericTable.js';
 
 dbService.connectToDb();
@@ -50,7 +49,6 @@ function a11yProps(index) {
 export default function TabsContainer() {
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(1);
-  const [db, setDb] = React.useState(initialDb);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);

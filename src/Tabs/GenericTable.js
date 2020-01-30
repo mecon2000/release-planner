@@ -75,7 +75,7 @@ export function GenericTable(props) {
   const [cellsPreviousValue, setCellsPreviousValue] = React.useState(cellsInitValue);
 
   const onCellKeyDown = (e, tableName, x, y) => {
-    if (x != cellsPreviousValue.x || y != cellsPreviousValue.y || tableName != cellsPreviousValue.tableName) {
+    if (x !== cellsPreviousValue.x || y !== cellsPreviousValue.y || tableName !== cellsPreviousValue.tableName) {
       setCellsPreviousValue({ tableName, value: e.target.innerText, x, y });
     }
   };
