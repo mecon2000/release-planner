@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import "./App.css";
-import { dbService } from "./dbService.js";
-import { useStyles } from "./GeneralStyles.js";
-import { TabPanel } from "./TabPanel.js";
-import { initialDb } from "./release_planner_db.js";
-import { GenericTable } from "./Tabs/GenericTable.js";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import './App.css';
+import { dbService } from './dbService.js';
+import { useStyles } from './GeneralStyles.js';
+import { TabPanel } from './TabPanel.js';
+import { initialDb } from './release_planner_db.js';
+import { GenericTable } from './Tabs/GenericTable.js';
 
 dbService.connectToDb();
 //dbService.resetToInitialDB();
@@ -43,7 +43,7 @@ dbService.connectToDb();
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
 
@@ -56,42 +56,32 @@ export default function TabsContainer() {
     setSelectedTab(newValue);
   };
 
-  const getGroups = () => ["Web", "Core"];
+  const getGroups = () => ['Web', 'Core'];
   const getTeams = () => [
-    ["Web", "Spiders"],
-    ["Web", "Sharks"]
+    ['Web', 'Spiders'],
+    ['Web', 'Sharks']
   ];
-  const getReleasesNames = () => ["20B", "20C"];
+  const getReleasesNames = () => ['20B', '20C'];
   const getReleasesdates = () => [
-    ["1/1/2020", "4/1/2020"],
-    ["5/1/2020", "9/1/2020"]
+    ['1/1/2020', '4/1/2020'],
+    ['5/1/2020', '9/1/2020']
   ];
   const getCapacity = () => [
-    ["5", "3"],
-    ["1", "2"],
-    ["1", "11"]
+    ['5', '3'],
+    ['1', '2'],
+    ['1', '11']
   ];
-  const getDevsAndSkillsets = () => ["shay-FS", "lior-FE"];
-  const getWeekDates = () => ["w1", "w2"];
-  const getEpicNames = () => ["snapshot", "patient-search"];
-  const getEpicsData = () => [
-    "epicData1",
-    "epicData2",
-    "epicData3",
-    "epicData4",
-    "epicData5",
-    "epicData6"
-  ];
+  const getDevsAndSkillsets = () => ['shay-FS', 'lior-FE'];
+  const getWeekDates = () => ['w1', 'w2'];
+  const getEpicNames = () => ['snapshot', 'patient-search'];
+  const getEpicsData = () => ['epicData1', 'epicData2', 'epicData3', 'epicData4', 'epicData5', 'epicData6'];
   const getPlanningData = () => [
-    ["1", "2"],
-    ["3", "4"]
+    ['1', '2'],
+    ['3', '4']
   ];
 
   const _log = (newVal, rowNumber, columnNumber) => {
-    console.log(
-      `%cVal changed!! ${newVal}, ${rowNumber}, ${columnNumber}`,
-      "color: orange;"
-    );
+    console.log(`%cVal changed!! ${newVal}, ${rowNumber}, ${columnNumber}`, 'color: orange;');
   };
   const handleCapacityChange = (newVal, rowNumber, columnNumber) => {
     _log(newVal, rowNumber, columnNumber);
@@ -109,11 +99,7 @@ export default function TabsContainer() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs
-          value={selectedTab}
-          onChange={handleTabChange}
-          aria-label="simple tabs example"
-        >
+        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
           <Tab label="General" {...a11yProps(0)} />
           <Tab label="Capacity" {...a11yProps(1)} />
           <Tab label="Epics" {...a11yProps(2)} />
@@ -123,19 +109,19 @@ export default function TabsContainer() {
 
       {/* --------------- GENERAL TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={0}>
-        <GenericTable title="Groups" columnHeaders={["Name"]}>
+        <GenericTable title="Groups" columnHeaders={['Name']}>
           {getGroups()}
         </GenericTable>
         <br />
 
-        <GenericTable title="Teams" columnHeaders={["Groups", "Name"]}>
+        <GenericTable title="Teams" columnHeaders={['Groups', 'Name']}>
           {getTeams()}
         </GenericTable>
         <br />
 
         <GenericTable
           title="Releases"
-          columnHeaders={["Start date", "End date"]}
+          columnHeaders={['Start date', 'End date']}
           rowHeaders={getReleasesNames()}
           isEditable="true"
           onCellChanged={handleReleaseChange}
@@ -150,32 +136,32 @@ export default function TabsContainer() {
         <h1>Capacity:</h1>
         <GenericTable
           title="Spiders"
-          columnHeaders={getWeekDates("Spiders")}
-          rowHeaders={getDevsAndSkillsets("Spiders")}
+          columnHeaders={getWeekDates('Spiders')}
+          rowHeaders={getDevsAndSkillsets('Spiders')}
           isEditable="true"
           onCellChanged={handleCapacityChange}
         >
-          {getCapacity("Spiders")}
+          {getCapacity('Spiders')}
         </GenericTable>
 
         <GenericTable
           title="Sharks"
-          columnHeaders={getWeekDates("Sharks")}
-          rowHeaders={getDevsAndSkillsets("Sharks")}
+          columnHeaders={getWeekDates('Sharks')}
+          rowHeaders={getDevsAndSkillsets('Sharks')}
           isEditable="true"
           onCellChanged={handleCapacityChange}
         >
-          {getCapacity("Sharks")}
+          {getCapacity('Sharks')}
         </GenericTable>
 
         <GenericTable
           title="Threads"
-          columnHeaders={getWeekDates("Threads")}
+          columnHeaders={getWeekDates('Threads')}
           rowHeaders={getDevsAndSkillsets()}
           isEditable="true"
           onCellChanged={handleCapacityChange}
         >
-          {getCapacity("Threads")}
+          {getCapacity('Threads')}
         </GenericTable>
       </TabPanel>
 
@@ -184,16 +170,16 @@ export default function TabsContainer() {
         <GenericTable
           title="Epics"
           columnHeaders={[
-            "Release",
-            "priority",
-            "Pro)ram",
-            "FE est",
-            "BE est",
-            "FS est",
-            "Core est",
-            "Scanner est",
-            "MSK est",
-            "ALG est"
+            'Release',
+            'priority',
+            'Pro)ram',
+            'FE est',
+            'BE est',
+            'FS est',
+            'Core est',
+            'Scanner est',
+            'MSK est',
+            'ALG est'
           ]}
           rowHeaders={getEpicNames()}
           isEditable="true"
@@ -209,8 +195,8 @@ export default function TabsContainer() {
         <h1>Planning:</h1>
         <GenericTable
           title="Spiders"
-          columnHeaders={getDevsAndSkillsets("Spiders")}
-          rowHeaders={getWeekDates("Spiders")}
+          columnHeaders={getDevsAndSkillsets('Spiders')}
+          rowHeaders={getWeekDates('Spiders')}
           isEditable="true"
           onCellChanged={handlePlanningChange}
         >
