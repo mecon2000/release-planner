@@ -10,9 +10,7 @@ import { dbService } from "./dbService.js";
 import { useStyles } from "./GeneralStyles.js";
 import { TabPanel } from "./TabPanel.js";
 import { initialDb } from "./release_planner_db.js";
-import { Teams } from "./Tabs/Teams.js";
-import { Groups } from "./Tabs/Groups.js";
-import { Capacity } from "./Tabs/Capacity.js";
+import { GenericTable } from "./Tabs/GenericTable.js";
 
 dbService.connectToDb();
 //dbService.resetToInitialDB();
@@ -58,6 +56,56 @@ export default function TabsContainer() {
     setSelectedTab(newValue);
   };
 
+  const getGroups = () => ["Web", "Core"];
+  const getTeams = () => [
+    ["Web", "Spiders"],
+    ["Web", "Sharks"]
+  ];
+  const getReleasesNames = () => ["20B", "20C"];
+  const getReleasesdates = () => [
+    ["1/1/2020", "4/1/2020"],
+    ["5/1/2020", "9/1/2020"]
+  ];
+  const getCapacity = () => [
+    ["5", "3"],
+    ["1", "2"],
+    ["1", "11"]
+  ];
+  const getDevsAndSkillsets = () => ["shay-FS", "lior-FE"];
+  const getWeekDates = () => ["w1", "w2"];
+  const getEpicNames = () => ["snapshot", "patient-search"];
+  const getEpicsData = () => [
+    "epicData1",
+    "epicData2",
+    "epicData3",
+    "epicData4",
+    "epicData5",
+    "epicData6"
+  ];
+  const getPlanningData = () => [
+    ["1", "2"],
+    ["3", "4"]
+  ];
+
+  const _log = (newVal, rowNumber, columnNumber) => {
+    console.log(
+      `%cVal changed!! ${newVal}, ${rowNumber}, ${columnNumber}`,
+      "color: orange;"
+    );
+  };
+  const handleCapacityChange = (newVal, rowNumber, columnNumber) => {
+    _log(newVal, rowNumber, columnNumber);
+  };
+  const handleReleaseChange = (newVal, rowNumber, columnNumber) => {
+    _log(newVal, rowNumber, columnNumber);
+  };
+  const handlePlanningChange = (newVal, rowNumber, columnNumber) => {
+    _log(newVal, rowNumber, columnNumber);
+  };
+  const handleEpicChange = (newVal, rowNumber, columnNumber) => {
+    _log(newVal, rowNumber, columnNumber);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -66,21 +114,108 @@ export default function TabsContainer() {
           onChange={handleTabChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Groups" {...a11yProps(0)} />
-          <Tab label="Teams" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="General" {...a11yProps(0)} />
+          <Tab label="Capacity" {...a11yProps(1)} />
+          <Tab label="Epics" {...a11yProps(2)} />
+          <Tab label="Planning" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
+
+      {/* --------------- GENERAL TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={0}>
-        <Groups />
+        <GenericTable title="Groups" columnHeaders={["Name"]}>
+          {getGroups()}
+        </GenericTable>
+        <br />
+
+        <GenericTable title="Teams" columnHeaders={["Groups", "Name"]}>
+          {getTeams()}
+        </GenericTable>
+        <br />
+
+        <GenericTable
+          title="Releases"
+          columnHeaders={["Start date", "End date"]}
+          rowHeaders={getReleasesNames()}
+          isEditable="true"
+          onCellChanged={handleReleaseChange}
+        >
+          {getReleasesdates()}
+        </GenericTable>
       </TabPanel>
 
+      {/* --------------- CAPACITY TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={1}>
-        <Teams />
+        {/* use 'for' here, take array of groups: */}
+        <h1>Capacity:</h1>
+        <GenericTable
+          title="Spiders"
+          columnHeaders={getWeekDates("Spiders")}
+          rowHeaders={getDevsAndSkillsets("Spiders")}
+          isEditable="true"
+          onCellChanged={handleCapacityChange}
+        >
+          {getCapacity("Spiders")}
+        </GenericTable>
+
+        <GenericTable
+          title="Sharks"
+          columnHeaders={getWeekDates("Sharks")}
+          rowHeaders={getDevsAndSkillsets("Sharks")}
+          isEditable="true"
+          onCellChanged={handleCapacityChange}
+        >
+          {getCapacity("Sharks")}
+        </GenericTable>
+
+        <GenericTable
+          title="Threads"
+          columnHeaders={getWeekDates("Threads")}
+          rowHeaders={getDevsAndSkillsets()}
+          isEditable="true"
+          onCellChanged={handleCapacityChange}
+        >
+          {getCapacity("Threads")}
+        </GenericTable>
       </TabPanel>
 
+      {/* --------------- EPICS TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={2}>
-        <Capacity />
+        <GenericTable
+          title="Epics"
+          columnHeaders={[
+            "Release",
+            "priority",
+            "Pro)ram",
+            "FE est",
+            "BE est",
+            "FS est",
+            "Core est",
+            "Scanner est",
+            "MSK est",
+            "ALG est"
+          ]}
+          rowHeaders={getEpicNames()}
+          isEditable="true"
+          onCellChanged={handleEpicChange}
+        >
+          {getEpicsData()}
+        </GenericTable>
+      </TabPanel>
+
+      {/* --------------- PLANNING TAB ----------------------------------------------------- */}
+      <TabPanel value={selectedTab} index={3}>
+        {/* use 'for' here, take array of teams: */}
+        <h1>Planning:</h1>
+        <GenericTable
+          title="Spiders"
+          columnHeaders={getDevsAndSkillsets("Spiders")}
+          rowHeaders={getWeekDates("Spiders")}
+          isEditable="true"
+          onCellChanged={handlePlanningChange}
+        >
+          {getPlanningData()}
+        </GenericTable>
       </TabPanel>
     </div>
   );
