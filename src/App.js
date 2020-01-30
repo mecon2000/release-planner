@@ -49,7 +49,7 @@ function a11yProps(index) {
 
 export default function TabsContainer() {
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState(2);
+  const [selectedTab, setSelectedTab] = React.useState(1);
   const [db, setDb] = React.useState(initialDb);
 
   const handleTabChange = (event, newValue) => {
