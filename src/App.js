@@ -74,26 +74,32 @@ export default function TabsContainer() {
   const getDevsAndSkillsets = () => ['shay-FS', 'lior-FE'];
   const getWeekDates = () => ['w1', 'w2'];
   const getEpicNames = () => ['snapshot', 'patient-search'];
-  const getEpicsData = () => ['epicData1', 'epicData2', 'epicData3', 'epicData4', 'epicData5', 'epicData6'];
+  const getEpicsData = () => [
+    ['20A2', '100', 'ortho', '3', '2', '5', '0', '0', '0', '0'],
+    ['20A2', '200', 'resto', '1', '2', '3', '4', '5', '6', '7']
+  ];
   const getPlanningData = () => [
     ['1', '2'],
     ['3', '4']
   ];
 
-  const _log = (newVal, rowNumber, columnNumber) => {
-    console.log(`%cVal changed!! ${newVal}, ${rowNumber}, ${columnNumber}`, 'color: orange;');
+  const _log = (newVal, rowHeader, columnHeader) => {
+    console.log(`%cVal changed!! ${newVal}, ${rowHeader}, ${columnHeader}`, 'color: orange;');
   };
-  const handleCapacityChange = (newVal, rowNumber, columnNumber) => {
-    _log(newVal, rowNumber, columnNumber);
+  const handleCapacityChange = (newVal, rowHeader, columnHeader) => {
+    _log(newVal, rowHeader, columnHeader);
+    //dbService.setDevCapacityFor1Week()
   };
-  const handleReleaseChange = (newVal, rowNumber, columnNumber) => {
-    _log(newVal, rowNumber, columnNumber);
+  const handleReleaseChange = (newVal, rowHeader, columnHeader) => {
+    _log(newVal, rowHeader, columnHeader);
+    //dbService.
   };
-  const handlePlanningChange = (newVal, rowNumber, columnNumber) => {
-    _log(newVal, rowNumber, columnNumber);
+  const handlePlanningChange = (newVal, rowHeader, columnHeader) => {
+    _log(newVal, rowHeader, columnHeader);
+    //dbService.
   };
-  const handleEpicChange = (newVal, rowNumber, columnNumber) => {
-    _log(newVal, rowNumber, columnNumber);
+  const handleEpicChange = (newVal, rowHeader, columnHeader) => {
+    _log(newVal, rowHeader, columnHeader);
   };
 
   return (
@@ -172,7 +178,7 @@ export default function TabsContainer() {
           columnHeaders={[
             'Release',
             'priority',
-            'Pro)ram',
+            'Program',
             'FE est',
             'BE est',
             'FS est',

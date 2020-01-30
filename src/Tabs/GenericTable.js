@@ -18,7 +18,7 @@ export function GenericTable(props) {
                     <Td
                       width="10%"
                       contentEditable={props.isEditable}
-                      onKeyUp={e => onCellKeyUp(e, rowNumber, columnNumber)}
+                      onKeyUp={e => onCellKeyUp(e, element, props.columnHeaders[columnNumber])}
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
                     >
                       {cell}
@@ -29,7 +29,7 @@ export function GenericTable(props) {
                 <Td
                   width="10%"
                   contentEditable={props.isEditable}
-                  onKeyUp={e => onCellKeyUp(e, rowNumber, 0)}
+                  onKeyUp={e => onCellKeyUp(e, element, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
                   {element}>{props.children[rowNumber]}
@@ -47,7 +47,7 @@ export function GenericTable(props) {
                     <Td
                       width="10%"
                       contentEditable={props.isEditable}
-                      onKeyUp={e => onCellKeyUp(e, rowNumber, columnNumber)}
+                      onKeyUp={e => onCellKeyUp(e, rowNumber, props.columnHeaders[columnNumber])}
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
                     >
                       {cell}
@@ -80,7 +80,6 @@ export function GenericTable(props) {
     }
   };
 
-  //TODO perhaps replace x,y with rowHeader, columnHeader
   const onCellKeyUp = (e, x, y) => {
     if (e.key === 'Enter') {
       eraseEnterFromCell(e);
@@ -95,9 +94,9 @@ export function GenericTable(props) {
     }
   };
 
-  function eraseEnterFromCell(e) {
+  const eraseEnterFromCell = e => {
     e.target.innerText = e.target.innerText.replace('\n', '');
-  }
+  };
 
   //TODO replace <u> with css style
   //TODO width should be in a param that all adress it.
