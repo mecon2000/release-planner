@@ -10,14 +10,16 @@ export function GenericTable(props) {
     props.rowHeaders
       ? props.rowHeaders.forEach((element, rowNumber) => {
           row.push(
-            <Tr>
+            <Tr key={rowNumber}>
               <Th width="10%">{element}</Th>
               {props.children[rowNumber] && Array.isArray(props.children[rowNumber]) ? (
                 props.children[rowNumber].map((cell, columnNumber) => {
                   return (
                     <Td
                       width="10%"
+                      key={columnNumber}
                       contentEditable={props.isEditable}
+                      suppressContentEditableWarning={true}
                       onKeyUp={e => onCellKeyUp(e, element, props.columnHeaders[columnNumber])}
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
                     >
@@ -28,7 +30,8 @@ export function GenericTable(props) {
               ) : (
                 <Td
                   width="10%"
-                  contentEditable={props.isEditable}
+                  key={rowNumber}
+                  contentEditable={props.isEditable}                  
                   onKeyUp={e => onCellKeyUp(e, element, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
@@ -40,12 +43,13 @@ export function GenericTable(props) {
         })
       : props.children.forEach((element, rowNumber) => {
           row.push(
-            <Tr>
+            <Tr key={rowNumber}>
               {element && Array.isArray(element) ? (
                 element.map((cell, columnNumber) => {
                   return (
                     <Td
                       width="10%"
+                      key={columnNumber}
                       contentEditable={props.isEditable}
                       onKeyUp={e => onCellKeyUp(e, rowNumber, props.columnHeaders[columnNumber])}
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
@@ -57,6 +61,7 @@ export function GenericTable(props) {
               ) : (
                 <Td
                   width="10%"
+                  key={rowNumber}
                   contentEditable={props.isEditable}
                   onKeyUp={e => onCellKeyUp(e, rowNumber, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
@@ -110,8 +115,8 @@ export function GenericTable(props) {
         <Thead>
           <Tr>
             {props.rowHeaders && <Th width="10%" />}
-            {props.columnHeaders.map(h => {
-              return <Th width="10%">{h}</Th>;
+            {props.columnHeaders.map((h,i) => {
+              return <Th width="10%" key={i}>{h}</Th>;
             })}
           </Tr>
         </Thead>
