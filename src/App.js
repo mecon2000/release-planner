@@ -54,31 +54,51 @@ export default function TabsContainer() {
     setSelectedTab(newValue);
   };
 
-  const getGroups = () => ['Web', 'Core'];
+  const getGroups = () => ['Web', 'Core', 'Scanner'];
   const getTeams = () => [
     ['Web', 'Spiders'],
-    ['Web', 'Sharks']
+    ['Web', 'Sharks'],
+    ['Web', 'Threads'],
+    ['Core', 'Gold Strikers'],
+    ['Core', 'Goblins'],
+    ['Core', 'Blues'],
+    ['Scanner', 'Seals'],
+    ['Scanner', 'Team 13'],
   ];
-  const getReleasesNames = () => ['20B', '20C'];
+  const getReleasesNames = () => ['20A5','20B', '20C'];
   const getReleasesdates = () => [
-    ['1/1/2020', '4/1/2020'],
-    ['5/1/2020', '9/1/2020']
+    ['2/2/2020', '1/3/2020'],
+    ['14/2/2020', '1/4/2020'],
+    ['2/4/2020', '1/8/2020']
   ];
-  const getCapacity = () => [
-    ['5', '3'],
-    ['1', '2'],
-    ['1', '11']
-  ];
+  const getCapacity = (team) => {
+    switch (team) {
+      case 'Spiders': return [['5', '5'],['5', '5'],['5', '5']];
+      case 'Sharks': return [['5', '5'],['5', '5'],['5', '5']];
+      case 'Threads': return [['5', '5'],['5', '5'],['5', '5']];
+      default: return [['5', '5'],['5', '5'],['5', '5']];
+      
+    }
+  }
   const getDevsAndSkillsets = () => ['shay-FS', 'lior-FE'];
-  const getWeekDates = () => ['w1', 'w2'];
-  const getEpicNames = () => ['snapshot', 'patient-search'];
+  const getWeekDates = () => ['w5', 'w6','w7', 'w8','w9', 'w10','w11', 'w12'];
+  const getEpicNames = () => ['snapshot w2', 'patient-mgmt with IDS', 'texture mapping', 'accnt management'];
   const getEpicsData = () => [
-    ['20A2', '100', 'ortho', '3', '1', '2', '1', '5', '1', '0', '1', '0', '1', '0', '1', '0'],
-    ['20A2', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7']
+    ['20A5', '100', 'ortho', '3', '1', '2', '1', '5', '1', '0', '1', '0', '1', '0', '1', '0'],
+    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
+    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
+    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
+    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7']
   ];
   const getPlanningData = () => [
     ['1', '2'],
-    ['3', '4']
+    ['3', '4'],
+    ['1', '2'],
+    ['3', '4'],
+    ['1', '2'],
+    ['3', '4'],
+    ['1', '2'],
+    ['3', '4'],
   ];
 
   const _log = (newVal, rowHeader, columnHeader) => {
@@ -178,17 +198,17 @@ export default function TabsContainer() {
             'priority',
             'Program',
             'FE est',
-            'FE max paralel',
+            'FE max parallel',
             'BE est',
-            'BE max paralel',
+            'BE max parallel',
             'Core est',
-            'Core max paralel',
+            'Core max parallel',
             'Scanner est',
-            'Scanner max paralel',
+            'Scanner max parallel',
             'MSK est',
-            'MSK max paralel',
+            'MSK max parallel',
             'ALG est',
-            'ALG max paralel',
+            'ALG max parallel',
             'preferred teams'
           ]}
           rowHeaders={getEpicNames()}
@@ -210,7 +230,7 @@ export default function TabsContainer() {
           isEditable="true"
           onCellChanged={handlePlanningChange}
         >
-          {getPlanningData()}
+          {getPlanningData('Spiders')}
         </GenericTable>
       </TabPanel>
     </div>
