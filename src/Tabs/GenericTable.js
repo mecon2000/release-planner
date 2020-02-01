@@ -31,7 +31,7 @@ export function GenericTable(props) {
                 <Td
                   width="10%"
                   key={rowNumber}
-                  contentEditable={props.isEditable}                  
+                  contentEditable={props.isEditable}
                   onKeyUp={e => onCellKeyUp(e, element, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
@@ -111,12 +111,16 @@ export function GenericTable(props) {
       <h1 align="left">
         <u>{props.title}</u>
       </h1>
-      <Table>
+      <Table style={{ border: '1px solid red', width: 'initial' }}>
         <Thead>
           <Tr>
             {props.rowHeaders && <Th width="10%" />}
-            {props.columnHeaders.map((h,i) => {
-              return <Th width="10%" key={i}>{h}</Th>;
+            {props.columnHeaders.map((h, i) => {
+              return (
+                <Th width="10%" key={i}>
+                  {h}
+                </Th>
+              );
             })}
           </Tr>
         </Thead>
