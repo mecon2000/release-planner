@@ -11,6 +11,21 @@ import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './Tabs/TabPanel.js';
 import { GenericTable } from './Tabs/GenericTable.js';
 
+import {
+  calculatePlanning,
+  getEpicsData,
+  convertToFlatArray,
+  getCapacity,
+  getDevsAndSkillsets,
+  getWeekDates,
+  getReleasesdates,
+  getReleasesNames,
+  getTeams,
+  getGroups,
+  getEpicNames,
+  getEpicsHeaders
+} from './TempLogic';
+
 dbService.connectToDb();
 //dbService.resetToInitialDB();
 
@@ -53,53 +68,6 @@ export default function TabsContainer() {
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
-
-  const getGroups = () => ['Web', 'Core', 'Scanner'];
-  const getTeams = () => [
-    ['Web', 'Spiders'],
-    ['Web', 'Sharks'],
-    ['Web', 'Threads'],
-    ['Core', 'Gold Strikers'],
-    ['Core', 'Goblins'],
-    ['Core', 'Blues'],
-    ['Scanner', 'Seals'],
-    ['Scanner', 'Team 13'],
-  ];
-  const getReleasesNames = () => ['20A5','20B', '20C'];
-  const getReleasesdates = () => [
-    ['2/2/2020', '1/3/2020'],
-    ['14/2/2020', '1/4/2020'],
-    ['2/4/2020', '1/8/2020']
-  ];
-  const getCapacity = (team) => {
-    switch (team) {
-      case 'Spiders': return [['5', '5'],['5', '5'],['5', '5']];
-      case 'Sharks': return [['5', '5'],['5', '5'],['5', '5']];
-      case 'Threads': return [['5', '5'],['5', '5'],['5', '5']];
-      default: return [['5', '5'],['5', '5'],['5', '5']];
-      
-    }
-  }
-  const getDevsAndSkillsets = () => ['shay-FS', 'lior-FE'];
-  const getWeekDates = () => ['w5', 'w6','w7', 'w8','w9', 'w10','w11', 'w12'];
-  const getEpicNames = () => ['snapshot w2', 'patient-mgmt with IDS', 'texture mapping', 'accnt management'];
-  const getEpicsData = () => [
-    ['20A5', '100', 'ortho', '3', '1', '2', '1', '5', '1', '0', '1', '0', '1', '0', '1', '0'],
-    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
-    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
-    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7'],
-    ['20B', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7']
-  ];
-  const getPlanningData = () => [
-    ['1', '2'],
-    ['3', '4'],
-    ['1', '2'],
-    ['3', '4'],
-    ['1', '2'],
-    ['3', '4'],
-    ['1', '2'],
-    ['3', '4'],
-  ];
 
   const _log = (newVal, rowHeader, columnHeader) => {
     console.log(`%cVal changed!! ${newVal}, ${rowHeader}, ${columnHeader}`, 'color: orange;');
@@ -193,29 +161,12 @@ export default function TabsContainer() {
       <TabPanel value={selectedTab} index={2}>
         <GenericTable
           title="Epics"
-          columnHeaders={[
-            'Release',
-            'priority',
-            'Program',
-            'FE est',
-            'FE max parallel',
-            'BE est',
-            'BE max parallel',
-            'Core est',
-            'Core max parallel',
-            'Scanner est',
-            'Scanner max parallel',
-            'MSK est',
-            'MSK max parallel',
-            'ALG est',
-            'ALG max parallel',
-            'preferred teams'
-          ]}
+          columnHeaders={getEpicsHeaders()}
           rowHeaders={getEpicNames()}
           isEditable="true"
           onCellChanged={handleEpicChange}
         >
-          {getEpicsData()}
+          {convertToFlatArray(getEpicsData())}
         </GenericTable>
       </TabPanel>
 
@@ -230,7 +181,7 @@ export default function TabsContainer() {
           isEditable="true"
           onCellChanged={handlePlanningChange}
         >
-          {getPlanningData('Spiders')}
+          {calculatePlanning('Spiders')}
         </GenericTable>
       </TabPanel>
     </div>
