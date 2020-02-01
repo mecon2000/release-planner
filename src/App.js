@@ -48,7 +48,7 @@ function a11yProps(index) {
 
 export default function TabsContainer() {
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState(1);
+  const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -73,8 +73,8 @@ export default function TabsContainer() {
   const getWeekDates = () => ['w1', 'w2'];
   const getEpicNames = () => ['snapshot', 'patient-search'];
   const getEpicsData = () => [
-    ['20A2', '100', 'ortho', '3', '2', '5', '0', '0', '0', '0'],
-    ['20A2', '200', 'resto', '1', '2', '3', '4', '5', '6', '7']
+    ['20A2', '100', 'ortho', '3', '1', '2', '1', '5', '1', '0', '1', '0', '1', '0', '1', '0'],
+    ['20A2', '200', 'resto', '2', '1', '2', '1', '3', '1', '4', '1', '5', '1', '6', '1','7']
   ];
   const getPlanningData = () => [
     ['1', '2'],
@@ -178,12 +178,18 @@ export default function TabsContainer() {
             'priority',
             'Program',
             'FE est',
+            'FE max paralel',
             'BE est',
-            'FS est',
+            'BE max paralel',
             'Core est',
+            'Core max paralel',
             'Scanner est',
+            'Scanner max paralel',
             'MSK est',
-            'ALG est'
+            'MSK max paralel',
+            'ALG est',
+            'ALG max paralel',
+            'preferred teams'
           ]}
           rowHeaders={getEpicNames()}
           isEditable="true"
