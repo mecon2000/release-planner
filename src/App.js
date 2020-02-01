@@ -8,7 +8,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './App.css';
 import { dbService } from './dbService.js';
 import { useStyles } from './GeneralStyles.js';
-import { TabPanel } from './TabPanel.js';
+import { TabPanel } from './Tabs/TabPanel.js';
 import { GenericTable } from './Tabs/GenericTable.js';
 
 dbService.connectToDb();
