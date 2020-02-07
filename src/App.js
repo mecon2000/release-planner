@@ -61,7 +61,7 @@ function a11yProps(index) {
   };
 }
 
-const initialTab = 3
+const initialTab = 3;
 
 export default function TabsContainer() {
   const classes = useStyles();
@@ -161,7 +161,7 @@ export default function TabsContainer() {
 
       {/* --------------- EPICS TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={2}>
-        <GenericTable 
+        <GenericTable
           title="Epics"
           columnHeaders={getEpicsHeaders()}
           rowHeaders={getEpicNames()}
@@ -174,17 +174,19 @@ export default function TabsContainer() {
 
       {/* --------------- PLANNING TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={3}>
-        {/* use 'for' here, take array of teams: */}
         <h1>Planning:</h1>
-        <GenericTable
-          title="Spiders"
-          columnHeaders={getDevsAndSkillsets('Spiders')}
-          rowHeaders={getWeekDates('Spiders')}
-          isEditable="true"
-          onCellChanged={handlePlanningChange}
-        >
-          {calculatePlanning('Spiders')}
-        </GenericTable>
+
+        {['Spiders', 'Sharks', 'Threads'].map(teamName => (
+          <GenericTable
+            title={teamName}
+            columnHeaders={getDevsAndSkillsets(teamName)}
+            rowHeaders={getWeekDates(teamName)}
+            isEditable="true"
+            onCellChanged={handlePlanningChange}
+          >
+            {calculatePlanning(teamName)}
+          </GenericTable>
+        ))}
       </TabPanel>
     </div>
   );
