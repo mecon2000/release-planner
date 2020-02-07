@@ -126,37 +126,18 @@ export default function TabsContainer() {
 
       {/* --------------- CAPACITY TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={1}>
-        {/* use 'for' here, take array of groups: */}
         <h1>Capacity:</h1>
-        <GenericTable
-          title="Spiders"
-          columnHeaders={getWeekDates('Spiders')}
-          rowHeaders={getDevsAndSkillsets('Spiders')}
-          isEditable="true"
-          onCellChanged={handleCapacityChange}
-        >
-          {getCapacity('Spiders')}
-        </GenericTable>
-
-        <GenericTable
-          title="Sharks"
-          columnHeaders={getWeekDates('Sharks')}
-          rowHeaders={getDevsAndSkillsets('Sharks')}
-          isEditable="true"
-          onCellChanged={handleCapacityChange}
-        >
-          {getCapacity('Sharks')}
-        </GenericTable>
-
-        <GenericTable
-          title="Threads"
-          columnHeaders={getWeekDates('Threads')}
-          rowHeaders={getDevsAndSkillsets('Threads')}
-          isEditable="true"
-          onCellChanged={handleCapacityChange}
-        >
-          {getCapacity('Threads')}
-        </GenericTable>
+        {['Spiders', 'Sharks', 'Threads'].map(teamName => (
+          <GenericTable
+            title={teamName}
+            columnHeaders={getWeekDates(teamName)}
+            rowHeaders={getDevsAndSkillsets(teamName)}
+            isEditable="true"
+            onCellChanged={handleCapacityChange}
+          >
+            {getCapacity(teamName)}
+          </GenericTable>
+        ))}
       </TabPanel>
 
       {/* --------------- EPICS TAB ----------------------------------------------------- */}
@@ -175,7 +156,6 @@ export default function TabsContainer() {
       {/* --------------- PLANNING TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={3}>
         <h1>Planning:</h1>
-
         {['Spiders', 'Sharks', 'Threads'].map(teamName => (
           <GenericTable
             title={teamName}
