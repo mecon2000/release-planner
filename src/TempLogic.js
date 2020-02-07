@@ -3,6 +3,7 @@
 //2. calculate the planning table (which is supposed to be done on the server)
 
 export const getGroups = () => ['Web', 'Core', 'Scanner'];
+
 export const getTeams = () => [
   ['Web', 'Spiders'],
   ['Web', 'Sharks'],
@@ -28,22 +29,22 @@ export const getCapacity = team => {
     case 'Spiders':
       return [
         ['5', '5', '5', '5', '5', '5', '5', '5'],
-        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5']
       ];
     case 'Sharks':
       return [
         ['5', '5', '5', '5', '5', '5', '5', '5'],
-        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5']
       ];
     case 'Threads':
       return [
         ['5', '5', '5', '5', '5', '5', '5', '5'],
-        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5']
       ];
     default:
       return [
         ['5', '5', '5', '5', '5', '5', '5', '5'],
-        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5']
       ];
   }
 };
@@ -93,20 +94,21 @@ const addEpicName = (epic, epicIndex) => {
   return epic;
 };
 
-const getDevsWithRelevantSkill = (nextFreeWeekForEachDev, teamName, skill, parallel) => {  
+const getDevsWithRelevantSkill = (nextFreeWeekForEachDev, teamName, skill, parallel) => {
   //TODO implement the use of parallel here. for now assuming it's always 1
   const devsWithRelevantSkillSets = nextFreeWeekForEachDev.filter(dev => dev.name.includes(skill));
   if (devsWithRelevantSkillSets.length === 0) return [];
 
-  const sortedDevsByNextFreeWeek = devsWithRelevantSkillSets.sort((dev1, dev2) => dev2.nextFreeWeek - dev1.nextFreeWeek); 
+  const sortedDevsByNextFreeWeek = devsWithRelevantSkillSets.sort(
+    (dev1, dev2) => dev2.nextFreeWeek - dev1.nextFreeWeek
+  );
   const leastOccupiedDev = sortedDevsByNextFreeWeek[0];
   return [leastOccupiedDev.name];
 };
 
 const addEffortToDevs = (tablesWithEfforts, devs, epicName, skillEffort) => {
   let remainingEffort = skillEffort;
-  let dev = tablesWithEfforts.find(dev => devs.includes(dev.name));
-  console.log(`%c${JSON.stringify(dev)}`, 'background: yellow; color: red;');
+  let dev = tablesWithEfforts.find(dev => devs.includes(dev.name));  
   if (!dev) return;
 
   let currentWeek = dev.nextFreeWeek.slice(1);
@@ -130,7 +132,7 @@ export const calculatePlanning = teamName => {
   const sortedEpicsWithNames = getEpicsData()
     .filter(epic => epic.candidate_teams.includes(teamName))
     .map(addEpicName)
-    .map(epic => ({ name: epic.name, estimations: epic.estimations }))
+    .map(epic => ({ name: epic.name, estimations: epic.estimations }));
 
   //now each epic should look like this:  {name:'name', estimations:{FE: {est:'5',max_parallel:'1'},....}}
   let nextFreeWeekForEachDev = getDevsAndSkillsets(teamName).map(dev => {
@@ -179,7 +181,6 @@ export const convertToFlatArray = obj => {
   });
   return rows;
 };
-
 
 //TODO - add release to comparer? depends on Mike.
 /*
