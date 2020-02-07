@@ -65,3 +65,7 @@ h1 {
 .addingNewItem {
   padding: 100px;
 }
+
+.epicsTab {
+  font-size: 5px;
+}

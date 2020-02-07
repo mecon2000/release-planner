@@ -61,9 +61,11 @@ function a11yProps(index) {
   };
 }
 
+const initialTab = 3
+
 export default function TabsContainer() {
   const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = React.useState(initialTab);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -149,7 +151,7 @@ export default function TabsContainer() {
         <GenericTable
           title="Threads"
           columnHeaders={getWeekDates('Threads')}
-          rowHeaders={getDevsAndSkillsets()}
+          rowHeaders={getDevsAndSkillsets('Threads')}
           isEditable="true"
           onCellChanged={handleCapacityChange}
         >
@@ -159,7 +161,7 @@ export default function TabsContainer() {
 
       {/* --------------- EPICS TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={2}>
-        <GenericTable
+        <GenericTable 
           title="Epics"
           columnHeaders={getEpicsHeaders()}
           rowHeaders={getEpicNames()}

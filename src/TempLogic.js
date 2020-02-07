@@ -27,33 +27,38 @@ export const getCapacity = team => {
   switch (team) {
     case 'Spiders':
       return [
-        ['5', '5'],
-        ['5', '5'],
-        ['5', '5']
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
       ];
     case 'Sharks':
       return [
-        ['5', '5'],
-        ['5', '5'],
-        ['5', '5']
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
       ];
     case 'Threads':
       return [
-        ['5', '5'],
-        ['5', '5'],
-        ['5', '5']
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
       ];
     default:
       return [
-        ['5', '5'],
-        ['5', '5'],
-        ['5', '5']
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
+        ['5', '5', '5', '5', '5', '5', '5', '5'],
       ];
   }
 };
-export const getDevsAndSkillsets = teamName => ['shay-FE', 'lior-BE'];
+export const getDevsAndSkillsets = teamName => {
+  // prettier-ignore
+  switch (teamName) {
+    case 'Spiders': return ['shay-FE', 'lior-BE'];
+    case 'Sharks':  return ['Jenny-FE', 'Shanni-BE'];
+    case 'Threads': return ['Tolik-BE', 'Daniel-FE'];
+    default:
+      return ['unknown team name'];
+  }
+};
 export const getWeekDates = () => ['w5', 'w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12'];
-export const getEpicNames = () => ['snapshot w2', 'patient-mgmt with IDS', 'texture mapping', 'accnt management'];
+export const getEpicNames = () => ['snapshot-w2', /*'patient-mgmt with IDS', 'texture mapping',*/ 'accnt-management'];
 export const getEpicsHeaders = () => [
   'Release',
   'priority',
@@ -75,13 +80,13 @@ export const getEpicsHeaders = () => [
 
 // prettier-ignore
 export const getEpicsData = () => [
-  { release:'20B', priority:'100', program:'ortho', estimations:{FE:{est:'15', max_parallel:'1'}, BE:{est:'5', max_parallel:'1'}, Core:{est:'5', max_parallel:'1'}, Scanner:{est:'0', max_parallel:'1'}, MSK:{est:'0', max_parallel:'1'}, ALG:{est:'0', max_parallel:'1'}}, candidate_teams: ['Spiders','Gold Strikers']},  //'snapshot w2'
+  { release:'20B', priority:'100', program:'ortho', estimations:{FE:{est:'15', max_parallel:'1'}, BE:{est:'6', max_parallel:'1'}, Core:{est:'5', max_parallel:'1'}, Scanner:{est:'0', max_parallel:'0'}, MSK:{est:'0', max_parallel:'0'}, ALG:{est:'0', max_parallel:'0'}}, candidate_teams: ['Spiders','Gold Strikers']},  //'snapshot w2'
 //  { release:'20B', priority:'200', program:'ortho', estimations:{FE:{est:'10', max_parallel:'1'}, BE:{est:'15', max_parallel:'1'}, Core:{est:'7', max_parallel:'1'}, Scanner:{est:'0', max_parallel:'1'}, MSK:{est:'0', max_parallel:'1'}, ALG:{est:'0', max_parallel:'1'}}, candidate_teams: ['Sharks','Gold Strikers']},   //'patient-mgmt with IDS'
 //  { release:'20B', priority:'300', program:'ortho', estimations:{FE:{est:'10', max_parallel:'1'}, BE:{est:'0',  max_parallel:'1'}, Core:{est:'10',max_parallel:'1'}, Scanner:{est:'0', max_parallel:'1'}, MSK:{est:'0', max_parallel:'1'}, ALG:{est:'0', max_parallel:'1'}}, candidate_teams: ['Spiders','Gold Strikers']},  //'texture mapping'
-  { release:'20A5', priority:'50', program:'ortho', estimations:{FE:{est:'15', max_parallel:'1'}, BE:{est:'15', max_parallel:'1'}, Core:{est:'0', max_parallel:'1'}, Scanner:{est:'0', max_parallel:'1'}, MSK:{est:'0', max_parallel:'1'}, ALG:{est:'0', max_parallel:'1'}}, candidate_teams: ['Spiders','Gold Strikers']},  //'accnt management'
-];
+  { release:'20A5', priority:'50', program:'ortho', estimations:{FE:{est:'15', max_parallel:'1'}, BE:{est:'15', max_parallel:'1'}, Core:{est:'0', max_parallel:'0'}, Scanner:{est:'0', max_parallel:'0'}, MSK:{est:'0', max_parallel:'0'}, ALG:{est:'0', max_parallel:'0'}}, candidate_teams: ['Spiders']},  //'accnt management'
+].sort(priorityComparer);
 
-const priorityComparer = (epic1, epic2) => epic2.priority - epic1.priority;
+const priorityComparer = (epic1, epic2) => epic1.priority - epic2.priority;
 
 const addEpicName = (epic, epicIndex) => {
   epic.name = getEpicNames()[epicIndex];
@@ -128,7 +133,6 @@ export const calculatePlanning = teamName => {
   const sortedEpicsWithNames = getEpicsData()
     .filter(epic => epic.candidate_teams.includes(teamName))
     .map(addEpicName)
-    .sort(priorityComparer)
     .map(epic => {
       return { name: epic.name, estimations: epic.estimations }; //TODO can this map be shorten?
     });
@@ -165,8 +169,20 @@ const convertToRenderableArray = table => {
 };
 
 export const convertToFlatArray = obj => {
-  let result = Object.keys(obj).map(key => (typeof obj[key] === 'object' ? convertToFlatArray(obj[key]) : obj[key]));
-  return result.flat();
+  let rows = [];
+  obj.forEach(epicData => {
+    let row = [];
+    row.push(epicData.release);
+    row.push(epicData.priority);
+    row.push(epicData.program);
+    Object.values(epicData.estimations).forEach(skillSet => {
+      row.push(skillSet.est);
+      row.push(skillSet.max_parallel);
+    });
+    row.push(epicData.candidate_teams.join());
+    rows.push(row);
+  });
+  return rows;
 };
 
 //TODO - add release to comparer? depends on Mike.
