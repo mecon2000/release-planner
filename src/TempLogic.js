@@ -93,17 +93,14 @@ const addEpicName = (epic, epicIndex) => {
   return epic;
 };
 
-const getDevsWithRelevantSkill = (tablesWithEfforts, teamName, skill, parallel) => {
-  //TODO fucking rewrite this, more readable!
+const getDevsWithRelevantSkill = (nextFreeWeekForEachDev, teamName, skill, parallel) => {  
   //TODO implement the use of parallel here. for now assuming it's always 1
-  const devsWithRelevantSkillSets = getDevsAndSkillsets(teamName).filter(dev => dev.includes(skill));
-  //return 1 dev who's most free:
-  const a = tablesWithEfforts.filter(dev => devsWithRelevantSkillSets.includes(dev.name));
-  const b = a.sort((dev1, dev2) => dev2.nextFreeWeek - dev1.nextFreeWeek);
-  const c = b[0];
-  const d = [];
-  d.push(c && c.name);
-  return d;
+  const devsWithRelevantSkillSets = nextFreeWeekForEachDev.filter(dev => dev.name.includes(skill));
+  if (devsWithRelevantSkillSets.length === 0) return [];
+
+  const sortedDevsByNextFreeWeek = devsWithRelevantSkillSets.sort((dev1, dev2) => dev2.nextFreeWeek - dev1.nextFreeWeek); 
+  const leastOccupiedDev = sortedDevsByNextFreeWeek[0];
+  return [leastOccupiedDev.name];
 };
 
 const addEffortToDevs = (tablesWithEfforts, devs, epicName, skillEffort) => {
@@ -121,11 +118,11 @@ const addEffortToDevs = (tablesWithEfforts, devs, epicName, skillEffort) => {
   dev.nextFreeWeek = 'w' + currentWeek;
 };
 
-const add1SkillIn1EpicToCorrectDev = (tablesWithEfforts, teamName, epicName, skill, skillEffort, parallel) => {
-  const devs = getDevsWithRelevantSkill(tablesWithEfforts, teamName, skill, parallel);
+const add1SkillIn1EpicToCorrectDev = (nextFreeWeekForEachDev, teamName, epicName, skill, skillEffort, parallel) => {
+  const devs = getDevsWithRelevantSkill(nextFreeWeekForEachDev, teamName, skill, parallel);
 
   if (devs.length) {
-    addEffortToDevs(tablesWithEfforts, devs, epicName, skillEffort);
+    addEffortToDevs(nextFreeWeekForEachDev, devs, epicName, skillEffort);
   }
 };
 
@@ -133,19 +130,17 @@ export const calculatePlanning = teamName => {
   const sortedEpicsWithNames = getEpicsData()
     .filter(epic => epic.candidate_teams.includes(teamName))
     .map(addEpicName)
-    .map(epic => {
-      return { name: epic.name, estimations: epic.estimations }; //TODO can this map be shorten?
-    });
+    .map(epic => ({ name: epic.name, estimations: epic.estimations }))
 
   //now each epic should look like this:  {name:'name', estimations:{FE: {est:'5',max_parallel:'1'},....}}
-  let tablesWithEfforts = getDevsAndSkillsets(teamName).map(dev => {
+  let nextFreeWeekForEachDev = getDevsAndSkillsets(teamName).map(dev => {
     return { name: dev, nextFreeWeek: 'w5' };
   });
 
   sortedEpicsWithNames.forEach(epic => {
     for (const skillName of Object.keys(epic.estimations)) {
       add1SkillIn1EpicToCorrectDev(
-        tablesWithEfforts,
+        nextFreeWeekForEachDev,
         teamName,
         epic.name,
         skillName,
@@ -154,7 +149,7 @@ export const calculatePlanning = teamName => {
       );
     }
   });
-  const x = convertToRenderableArray(tablesWithEfforts);
+  const x = convertToRenderableArray(nextFreeWeekForEachDev);
   return x;
 };
 
@@ -184,6 +179,7 @@ export const convertToFlatArray = obj => {
   });
   return rows;
 };
+
 
 //TODO - add release to comparer? depends on Mike.
 /*
