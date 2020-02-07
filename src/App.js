@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -6,7 +6,7 @@ import Tab from '@material-ui/core/Tab';
 
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './App.css';
-import { dbService } from './dbService.js';
+//import { dbService } from './dbService.js';
 import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './Tabs/TabPanel.js';
 import { GenericTable } from './Tabs/GenericTable.js';
@@ -21,12 +21,12 @@ import {
   getReleasesdates,
   getReleasesNames,
   getTeams,
-  getGroups,
   getEpicNames,
   getEpicsHeaders
 } from './TempLogic';
 
-dbService.connectToDb();
+//dbService.connectToDb();
+
 //dbService.resetToInitialDB();
 
 //TODO this should become several unit-tests
@@ -61,7 +61,8 @@ function a11yProps(index) {
   };
 }
 
-const initialTab = 3;
+const serverUrl = 'http://localhost:3333';
+const initialTab = 0;
 
 export default function TabsContainer() {
   const classes = useStyles();
@@ -90,6 +91,17 @@ export default function TabsContainer() {
     _log(newVal, rowHeader, columnHeader);
   };
 
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      const res = await fetch(serverUrl + '/groups');
+      const g = await res.json();
+      setGroups(g);
+    };
+    fetchGroups();
+  }, []);
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -104,7 +116,7 @@ export default function TabsContainer() {
       {/* --------------- GENERAL TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={0}>
         <GenericTable title="Groups" columnHeaders={['Name']}>
-          {getGroups()}
+          {groups}
         </GenericTable>
         <br />
 
@@ -130,6 +142,7 @@ export default function TabsContainer() {
         {['Spiders', 'Sharks', 'Threads'].map(teamName => (
           <GenericTable
             title={teamName}
+            key={teamName}
             columnHeaders={getWeekDates(teamName)}
             rowHeaders={getDevsAndSkillsets(teamName)}
             isEditable="true"
@@ -159,6 +172,7 @@ export default function TabsContainer() {
         {['Spiders', 'Sharks', 'Threads'].map(teamName => (
           <GenericTable
             title={teamName}
+            key={teamName}
             columnHeaders={getDevsAndSkillsets(teamName)}
             rowHeaders={getWeekDates(teamName)}
             isEditable="true"
