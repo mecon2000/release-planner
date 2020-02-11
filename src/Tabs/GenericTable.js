@@ -115,7 +115,7 @@ export function GenericTable(props) {
         <Thead>
           <Tr>
             {props.rowHeaders && <Th width="10%" />}
-            {props.columnHeaders.map((h, i) => {
+            {props.columnHeaders && props.columnHeaders.map((h, i) => {
               return (
                 <Th width="10%" key={i}>
                   {h}
