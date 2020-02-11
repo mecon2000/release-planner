@@ -32,6 +32,7 @@ export function GenericTable(props) {
                   width="10%"
                   key={rowNumber}
                   contentEditable={props.isEditable}
+                  suppressContentEditableWarning={true}
                   onKeyUp={e => onCellKeyUp(e, element, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
