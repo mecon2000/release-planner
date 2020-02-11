@@ -113,25 +113,35 @@ export default function TabsContainer() {
     return weekData.epics.some(e => devsInTeam.includes(e.dev.toLowerCase()));
   };
 
-  const getPlansAs2dArray = teamName => {
+  const create1weekRow = (devsInTeam, weekData) => {
+    let weekRow = [];
+    devsInTeam.forEach(dev => {
+      const theEpicTheDevIsWorkingOnThisWeek =
+        weekData && weekData.epics.find(e => e.dev.toLowerCase() === dev.toLowerCase()).epicName;
+      weekRow.push(theEpicTheDevIsWorkingOnThisWeek ? theEpicTheDevIsWorkingOnThisWeek : '-');
+    });
+    return weekRow;
+  };
+
+  const getWeekRange = () => [5, 12]; //TODO implement!
+
+  const getPlansAs2dArray = (teamName, devsInTeam) => {
     let res = [];
-    if (plans.length > 0) {
-      const sortedPlansFor1Team = plans
-        .filter(weekData => isWeekDataContainsDevFromTeam(weekData, teamName))
-        .sort((w1, w2) => w2.week - w1.week);
+    if (plans.length === 0 || !devsInTeam || devsInTeam.length ===0) return [['no data', 'no data']];
 
-      console.log(`%csortedPlansFor1Team : ${JSON.stringify(sortedPlansFor1Team)}`, 'background: yellow; color: red;');
+    const [startingWeek, endingWeek] = getWeekRange();
 
-      sortedPlansFor1Team.forEach(weekData => {
-        const sortedEpicsByDevs = weekData.epics.sort((e1, e2) => e2.dev.toLowerCase() - e1.dev.toLowerCase());
-        res.push(sortedEpicsByDevs.map(e => e.epicName));
-      });
-      //TODO problem, if a dev doesn't have an epic. i must mark that on the table!
-      console.log(`%cres: ${JSON.stringify(res)}`, 'background: yellow; color: red;');
+    const sortedPlansFor1Team = plans
+      .filter(weekData => isWeekDataContainsDevFromTeam(weekData, teamName))
+      .sort((w1, w2) => w2.week - w1.week);
+
+    for (let weekNumber = startingWeek; weekNumber <= endingWeek; weekNumber++) {
+      const weekNumberAsString = 'w' + weekNumber.toString().padStart(2, '0');
+      const weekData = sortedPlansFor1Team.find(w => w.week === weekNumberAsString);
+      let weekRow = create1weekRow(devsInTeam, weekData);
+      res.push(weekRow);
     }
-    return res.length > 0 ? res : [['loading', 'please wait']];
-
-    
+    return res;
   };
 
   return (
@@ -227,7 +237,7 @@ export default function TabsContainer() {
             isEditable="true"
             onCellChanged={handlePlanningChange}
           >
-            {getPlansAs2dArray(team.name)}
+            {getPlansAs2dArray(team.name, team.devs)}
           </GenericTable>
         ))}
 
