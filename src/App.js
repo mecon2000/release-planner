@@ -10,7 +10,8 @@ import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './Tabs/TabPanel.js';
 import { GenericTable } from './Tabs/GenericTable.js';
 
-import { calculatePlanning, getDevsAndSkillsets } from './TempLogic';
+import { calculatePlanning } from './TempLogic';
+import { Button } from '@material-ui/core';
 
 //props for accessibility:
 function a11yProps(index) {
@@ -21,7 +22,7 @@ function a11yProps(index) {
 }
 
 const serverUrl = 'http://localhost:3333';
-const initialTab = 2;
+const initialTab = 3;
 
 export default function TabsContainer() {
   const classes = useStyles();
@@ -54,6 +55,7 @@ export default function TabsContainer() {
   const [weekDates, setweekDates] = useState([]);
   const [devs, setDevs] = useState([]);
   const [epics, setEpics] = useState([]);
+  const [plans, setPlans] = useState([]);
 
   useEffect(() => {
     const fetchData = async (path, callback) => {
@@ -68,6 +70,7 @@ export default function TabsContainer() {
     fetchData('/releases', r => setReleases(r));
     fetchData('/weekDates', w => setweekDates(w));
     fetchData('/devs', d => setDevs(d));
+    fetchData('/plans', p => setPlans(p));
 
     const priorityComparer = (epic1, epic2) => epic1.priority - epic2.priority;
     fetchData('/epics', e => setEpics(e.sort(priorityComparer)));
@@ -103,6 +106,32 @@ export default function TabsContainer() {
       rows.push(row);
     });
     return rows;
+  };
+
+  const isWeekDataContainsDevFromTeam = (weekData, teamName) => {
+    const devsInTeam = devs.filter(d => d.team.toLowerCase() === teamName.toLowerCase()).map(d => d.name.toLowerCase());
+    return weekData.epics.some(e => devsInTeam.includes(e.dev.toLowerCase()));
+  };
+
+  const getPlansAs2dArray = teamName => {
+    let res = [];
+    if (plans.length > 0) {
+      const sortedPlansFor1Team = plans
+        .filter(weekData => isWeekDataContainsDevFromTeam(weekData, teamName))
+        .sort((w1, w2) => w2.week - w1.week);
+
+      console.log(`%csortedPlansFor1Team : ${JSON.stringify(sortedPlansFor1Team)}`, 'background: yellow; color: red;');
+
+      sortedPlansFor1Team.forEach(weekData => {
+        const sortedEpicsByDevs = weekData.epics.sort((e1, e2) => e2.dev.toLowerCase() - e1.dev.toLowerCase());
+        res.push(sortedEpicsByDevs.map(e => e.epicName));
+      });
+      //TODO problem, if a dev doesn't have an epic. i must mark that on the table!
+      console.log(`%cres: ${JSON.stringify(res)}`, 'background: yellow; color: red;');
+    }
+    return res.length > 0 ? res : [['loading', 'please wait']];
+
+    
   };
 
   return (
@@ -178,7 +207,7 @@ export default function TabsContainer() {
             'ALG max parallel',
             'preferred teams'
           ]}
-          rowHeaders={epics.map(e=>e.name)}
+          rowHeaders={epics.map(e => e.name)}
           isEditable="true"
           onCellChanged={handleEpicChange}
         >
@@ -193,14 +222,18 @@ export default function TabsContainer() {
           <GenericTable
             title={team.name}
             key={team.name}
-            columnHeaders={getDevsAndSkillsets(team.name)}
+            columnHeaders={team.devs}
             rowHeaders={weekDates}
             isEditable="true"
             onCellChanged={handlePlanningChange}
           >
-            {calculatePlanning(team.name)}
+            {getPlansAs2dArray(team.name)}
           </GenericTable>
         ))}
+
+        <Button onClick={calculatePlanning} variant="contained" color="primary">
+          re-calculate plans
+        </Button>
       </TabPanel>
     </div>
   );
