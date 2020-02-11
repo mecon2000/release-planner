@@ -116,14 +116,16 @@ export default function TabsContainer() {
   const create1weekRow = (devsInTeam, weekData) => {
     let weekRow = [];
     devsInTeam.forEach(dev => {
-      const theEpicTheDevIsWorkingOnThisWeek =
-        weekData && weekData.epics.find(e => e.dev.toLowerCase() === dev.toLowerCase()).epicName;
-      weekRow.push(theEpicTheDevIsWorkingOnThisWeek ? theEpicTheDevIsWorkingOnThisWeek : '-');
+      const epic = weekData && weekData.epics.find(e => e.dev.toLowerCase() === dev.toLowerCase());
+      const epicTheDevIsWorkingOnThisWeek = epic && epic.epicName;
+      weekRow.push(epicTheDevIsWorkingOnThisWeek ? epicTheDevIsWorkingOnThisWeek : '-');
     });
     return weekRow;
   };
 
-  const getWeekRange = () => [5, 12]; //TODO implement!
+  //TODO implement! should take earliest release startdate, and latest release endDate, 
+  //and transform their dates into week number 
+  const getWeekRange = () => [5, 12]; 
 
   const getPlansAs2dArray = (teamName, devsInTeam) => {
     let res = [];
