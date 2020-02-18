@@ -108,7 +108,7 @@ const getDevsWithRelevantSkill = (nextFreeWeekForEachDev, teamName, skill, paral
 
 const addEffortToDevs = (tablesWithEfforts, devs, epicName, skillEffort) => {
   let remainingEffort = skillEffort;
-  let dev = tablesWithEfforts.find(dev => devs.includes(dev.name));  
+  let dev = tablesWithEfforts.find(dev => devs.includes(dev.name));
   if (!dev) return;
 
   let currentWeek = dev.nextFreeWeek.slice(1);
