@@ -1,56 +1,54 @@
-import { initialDb } from "./release_planner_db.js";
+import { initialDb } from './release_planner_db.js';
 
 //TODO can use import instead?
-const firebase = require("firebase");
+const firebase = require('firebase');
 // Required for side-effects
-require("firebase/firestore");
+require('firebase/firestore');
 
 let fireBaseDB = null;
 
 const connectToDb = () => {
   firebase.initializeApp({
-    apiKey: "AIzaSyA9GWdpSk-eAFYzaYCdsqjNagBnZy6Z9sk",
-    authDomain: "releaseplanner-902dc.firebaseapp.com",
-    projectId: "releaseplanner-902dc"
+    apiKey: 'AIzaSyA9GWdpSk-eAFYzaYCdsqjNagBnZy6Z9sk',
+    authDomain: 'releaseplanner-902dc.firebaseapp.com',
+    projectId: 'releaseplanner-902dc'
   });
   fireBaseDB = firebase.firestore();
 };
 
 const getFullDB = async () => {
   let db = await fireBaseDB
-    .collection("db")
+    .collection('db')
     .get()
     .then(querySnapshot => {
       if (querySnapshot.size !== 1) {
-        throw new Error(
-          `expecting to have exactly 1 documnet, but have ${querySnapshot.size}!`
-        );
+        throw new Error(`expecting to have exactly 1 documnet, but have ${querySnapshot.size}!`);
       }
       return querySnapshot.docs[0].data();
     })
     .catch(error => {
-      console.error("Error in getDB: ", error);
+      console.error('Error in getDB: ', error);
     });
   return db;
 };
 
 const updateFullDB = async newDB => {
   await fireBaseDB
-    .collection("db")
-    .doc("everything")
+    .collection('db')
+    .doc('everything')
     .set(newDB)
     .catch(function(error) {
-      console.error("Error in updateDB: ", error);
+      console.error('Error in updateDB: ', error);
     });
 };
 
 const resetToInitialDB = async () => {
   await fireBaseDB
-    .collection("db")
-    .doc("everything")
+    .collection('db')
+    .doc('everything')
     .set(initialDb)
     .catch(function(error) {
-      console.error("Error in resetToInitialDB: ", error);
+      console.error('Error in resetToInitialDB: ', error);
     });
 };
 

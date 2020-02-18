@@ -123,13 +123,13 @@ export default function TabsContainer() {
     return weekRow;
   };
 
-  //TODO implement! should take earliest release startdate, and latest release endDate, 
-  //and transform their dates into week number 
-  const getWeekRange = () => [5, 12]; 
+  //TODO implement! should take earliest release startdate, and latest release endDate,
+  //and transform their dates into week number
+  const getWeekRange = () => [5, 12];
 
   const getPlansAs2dArray = (teamName, devsInTeam) => {
     let res = [];
-    if (plans.length === 0 || !devsInTeam || devsInTeam.length ===0) return [['no data', 'no data']];
+    if (plans.length === 0 || !devsInTeam || devsInTeam.length === 0) return [['no data', 'no data']];
 
     const [startingWeek, endingWeek] = getWeekRange();
 

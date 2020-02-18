@@ -23,35 +23,33 @@ body {
 
 .Table {
   display: grid;
-  grid-template-columns:  repeat(5, [col] 150px ) ;
-  grid-template-rows: repeat(3, [row] auto  );
-  border:2px solid white;
-  
+  grid-template-columns: repeat(5, [col] 150px);
+  grid-template-rows: repeat(3, [row] auto);
+  border: 2px solid white;
 }
 
-Th {
-  text-align:left;
+th {
+  text-align: left;
 }
 
-Td {
-  text-align:left;
+td {
+  text-align: left;
 }
 
 .OneCell {
   color: white;
-  border:1px solid white;
+  border: 1px solid white;
 }
 
 .RowHeader {
   color: white;
-  grid-column: col ;
+  grid-column: col;
   column-width: 300px;
-  border:1px solid white;
+  border: 1px solid white;
 }
 
 h1 {
   color: rgba(255, 255, 255, 0.753);
-  
 }
 
 .responsiveTable td {
