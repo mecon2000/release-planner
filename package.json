@@ -5,11 +5,19 @@
   "dependencies": {
     "@material-ui/core": "^4.6.0",
     "firebase": "^7.6.2",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
     "lodash": "^4.17.15",
+    "prettier": "^1.19.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
     "react-super-responsive-table": "^5.1.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,5 +39,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
