@@ -10,7 +10,6 @@ import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './Tabs/TabPanel.js';
 import { GenericTable } from './Tabs/GenericTable.js';
 
-import { calculatePlanning } from './TempLogic';
 import { Button } from '@material-ui/core';
 
 //props for accessibility:
@@ -25,6 +24,7 @@ const serverUrl = 'http://localhost:3333';
 const initialTab = 3;
 
 export default function TabsContainer() {
+  // todo: rename file to tabscontainer, add another app.js contains just tabs container
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(initialTab);
 
@@ -48,6 +48,15 @@ export default function TabsContainer() {
   const handleEpicChange = (newVal, rowHeader, columnHeader) => {
     _log(newVal, rowHeader, columnHeader);
   };
+
+  const recalculatePlan = teamName => {
+    fetchData(`/plans/recalculate&team=${teamName}`).then(plansFor1Team => {
+      const newPlans = {...plans};
+      newPlans[teamName] = plansFor1Team;
+      setPlans(newPlans);
+    });
+  };
+
   //#endregion handlers
   const [groups, setGroups] = useState([]);
   const [teams, setTeams] = useState([]);
@@ -57,23 +66,49 @@ export default function TabsContainer() {
   const [epics, setEpics] = useState([]);
   const [plans, setPlans] = useState([]);
 
+  // todo: can refactor all the above useState to a new hook
+
+  const fetchPlansForEachTeam = async teams => {
+    const fetchPromises = [];
+    teams.forEach(team => {
+      fetchPromises.push(
+        fetchData(`/plans/team/${team.name}`).then(res => {
+          return { teamName: team.name, newPlan: res };
+        })
+      );
+    });
+    const fetchPromisesResults = await Promise.all(fetchPromises);
+
+    let newPlans = {};
+    fetchPromisesResults.forEach(async team => {
+      newPlans[team.teamName] = team.newPlan;
+    });
+
+    if (Object.keys(newPlans).length) {
+      setPlans(newPlans);
+    }
+  };
+
+  const fetchData = async path => {
+    const res = await fetch(serverUrl + path);
+    const resObject = await res.json();
+    return resObject;
+    //TODO handle error, if resObject is empty?
+  };
+
   useEffect(() => {
-    const fetchData = async (path, callback) => {
-      const res = await fetch(serverUrl + path);
-      const resObject = await res.json();
-      callback && callback(resObject);
-      //TODO handle error, if resObject is empty?
-    };
+    fetchData('/groups').then(g => setGroups(g));
 
-    fetchData('/groups', g => setGroups(g));
-    fetchData('/teams/withDevs', t => setTeams(t));
-    fetchData('/releases', r => setReleases(r));
-    fetchData('/weekDates', w => setweekDates(w));
-    fetchData('/devs', d => setDevs(d));
-    fetchData('/plans', p => setPlans(p));
+    fetchData('/teams/withDevs').then(t => {
+      setTeams(t);
+      fetchPlansForEachTeam(t);
+    });
 
+    fetchData('/releases').then(r => setReleases(r));
+    fetchData('/weekDates').then(w => setweekDates(w));
+    fetchData('/devs').then(d => setDevs(d));
     const priorityComparer = (epic1, epic2) => epic1.priority - epic2.priority;
-    fetchData('/epics', e => setEpics(e.sort(priorityComparer)));
+    fetchData('/epics').then(e => setEpics(e.sort(priorityComparer)));
   }, []);
 
   const getReleasesNames = () => {
@@ -108,11 +143,6 @@ export default function TabsContainer() {
     return rows;
   };
 
-  const isWeekDataContainsDevFromTeam = (weekData, teamName) => {
-    const devsInTeam = devs.filter(d => d.team.toLowerCase() === teamName.toLowerCase()).map(d => d.name.toLowerCase());
-    return weekData.epics.some(e => devsInTeam.includes(e.dev.toLowerCase()));
-  };
-
   const create1weekRow = (devsInTeam, weekData) => {
     let weekRow = [];
     devsInTeam.forEach(dev => {
@@ -123,20 +153,18 @@ export default function TabsContainer() {
     return weekRow;
   };
 
-  //TODO implement! should take earliest release startdate, and latest release endDate, 
-  //and transform their dates into week number 
-  const getWeekRange = () => [5, 12]; 
+  //TODO implement! should take earliest release startdate, and latest release endDate,
+  //and transform their dates into week number
+  const getWeekRange = () => [5, 12];
 
   const getPlansAs2dArray = (teamName, devsInTeam) => {
-    let res = [];
-    if (plans.length === 0 || !devsInTeam || devsInTeam.length ===0) return [['no data', 'no data']];
+    const hasPlans = plans && plans[teamName] && plans[teamName].length && devsInTeam && devsInTeam.length;
+    if (!hasPlans) return [['no data', 'no data']];
 
     const [startingWeek, endingWeek] = getWeekRange();
+    const sortedPlansFor1Team = plans[teamName].sort((w1, w2) => w2.week - w1.week);
 
-    const sortedPlansFor1Team = plans
-      .filter(weekData => isWeekDataContainsDevFromTeam(weekData, teamName))
-      .sort((w1, w2) => w2.week - w1.week);
-
+    let res = [];
     for (let weekNumber = startingWeek; weekNumber <= endingWeek; weekNumber++) {
       const weekNumberAsString = 'w' + weekNumber.toString().padStart(2, '0');
       const weekData = sortedPlansFor1Team.find(w => w.week === weekNumberAsString);
@@ -231,21 +259,22 @@ export default function TabsContainer() {
       <TabPanel value={selectedTab} index={3}>
         <h1>Planning:</h1>
         {teams.map(team => (
-          <GenericTable
-            title={team.name}
-            key={team.name}
-            columnHeaders={team.devs}
-            rowHeaders={weekDates}
-            isEditable="true"
-            onCellChanged={handlePlanningChange}
-          >
-            {getPlansAs2dArray(team.name, team.devs)}
-          </GenericTable>
+          <React.Fragment>
+            <GenericTable
+              title={team.name}
+              key={team.name}
+              columnHeaders={team.devs}
+              rowHeaders={weekDates}
+              isEditable="true"
+              onCellChanged={handlePlanningChange}
+            >
+              {getPlansAs2dArray(team.name, team.devs)}
+            </GenericTable>
+            <Button onClick={e => recalculatePlan(team.name)} variant="contained" color="primary">
+              re-calculate plans for {team.name}
+            </Button>
+          </React.Fragment>
         ))}
-
-        <Button onClick={calculatePlanning} variant="contained" color="primary">
-          re-calculate plans
-        </Button>
       </TabPanel>
     </div>
   );
