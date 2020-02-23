@@ -1,22 +1,18 @@
 import React from 'react';
 
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
-
 export function GenericTable(props) {
   const row = [];
   const createRows = () => {
-    //TODO perhaps can unite if?
+    //TODO: perhaps can unite if?
     props.rowHeaders
       ? props.rowHeaders.forEach((element, rowNumber) => {
           row.push(
-            <Tr key={rowNumber}>
-              <Th width="10%">{element}</Th>
+            <tr key={rowNumber}>
+              <th>{element}</th>
               {props.children[rowNumber] && Array.isArray(props.children[rowNumber]) ? (
                 props.children[rowNumber].map((cell, columnNumber) => {
                   return (
-                    <Td
-                      width="10%"
+                    <td
                       key={columnNumber}
                       contentEditable={props.isEditable}
                       suppressContentEditableWarning={true}
@@ -24,12 +20,11 @@ export function GenericTable(props) {
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
                     >
                       {cell}
-                    </Td>
+                    </td>
                   );
                 })
               ) : (
-                <Td
-                  width="10%"
+                <td
                   key={rowNumber}
                   contentEditable={props.isEditable}
                   suppressContentEditableWarning={true}
@@ -37,40 +32,38 @@ export function GenericTable(props) {
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
                   {element}>{props.children[rowNumber]}
-                </Td>
+                </td>
               )}
-            </Tr>
+            </tr>
           );
         })
       : props.children.forEach((element, rowNumber) => {
           row.push(
-            <Tr key={rowNumber}>
+            <tr key={rowNumber}>
               {element && Array.isArray(element) ? (
                 element.map((cell, columnNumber) => {
                   return (
-                    <Td
-                      width="10%"
+                    <td
                       key={columnNumber}
                       contentEditable={props.isEditable}
                       onKeyUp={e => onCellKeyUp(e, rowNumber, props.columnHeaders[columnNumber])}
                       onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
                     >
                       {cell}
-                    </Td>
+                    </td>
                   );
                 })
               ) : (
-                <Td
-                  width="10%"
+                <td
                   key={rowNumber}
                   contentEditable={props.isEditable}
                   onKeyUp={e => onCellKeyUp(e, rowNumber, 0)}
                   onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
                 >
                   {element}
-                </Td>
+                </td>
               )}
-            </Tr>
+            </tr>
           );
         });
 
@@ -105,28 +98,23 @@ export function GenericTable(props) {
   };
 
   //TODO replace <u> with css style
-  //TODO width should be in a param that all adress it.
   return (
     <React.Fragment>
-      <div className="responsiveTable"></div>
-      <h1 align="left">
+      <h3 align="left">
         <u>{props.title}</u>
-      </h1>
-      <Table style={{ border: '1px solid red', width: 'initial' }}>
-        <Thead>
-          <Tr>
-            {props.rowHeaders && <Th width="10%" />}
-            {props.columnHeaders && props.columnHeaders.map((h, i) => {
-              return (
-                <Th width="10%" key={i}>
-                  {h}
-                </Th>
-              );
-            })}
-          </Tr>
-        </Thead>
-        <Tbody>{createRows()}</Tbody>
-      </Table>
+      </h3>
+      <table style={{ border: '1px solid red' }}>
+        <thead>
+          <tr>
+            {props.rowHeaders && <th />}
+            {props.columnHeaders &&
+              props.columnHeaders.map((h, i) => {
+                return <th key={i}>{h}</th>;
+              })}
+          </tr>
+        </thead>
+        <tbody>{createRows()}</tbody>
+      </table>
     </React.Fragment>
   );
 }

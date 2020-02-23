@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './App.css';
 import { useStyles } from './GeneralStyles.js';
 import { TabPanel } from './Tabs/TabPanel.js';
@@ -51,7 +50,7 @@ export default function TabsContainer() {
 
   const recalculatePlan = teamName => {
     fetchData(`/plans/recalculate&team=${teamName}`).then(plansFor1Team => {
-      const newPlans = {...plans};
+      const newPlans = { ...plans };
       newPlans[teamName] = plansFor1Team;
       setPlans(newPlans);
     });
@@ -210,7 +209,7 @@ export default function TabsContainer() {
 
       {/* --------------- CAPACITY TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={1}>
-        <h1>Capacity:</h1>
+        <h2>Capacity:</h2>
         {teams.map(team => (
           <GenericTable
             title={team.name}
@@ -257,24 +256,29 @@ export default function TabsContainer() {
 
       {/* --------------- PLANNING TAB ----------------------------------------------------- */}
       <TabPanel value={selectedTab} index={3}>
-        <h1>Planning:</h1>
-        {teams.map(team => (
-          <React.Fragment>
-            <GenericTable
-              title={team.name}
-              key={team.name}
-              columnHeaders={team.devs}
-              rowHeaders={weekDates}
-              isEditable="true"
-              onCellChanged={handlePlanningChange}
-            >
-              {getPlansAs2dArray(team.name, team.devs)}
-            </GenericTable>
-            <Button onClick={e => recalculatePlan(team.name)} variant="contained" color="primary">
-              re-calculate plans for {team.name}
-            </Button>
-          </React.Fragment>
-        ))}
+        <h2>Planning:</h2>
+        <div class="scrolling">
+          {teams.map(team => (
+            <React.Fragment>
+              <div className="horizontallyStackedTable">
+                <GenericTable
+                  title={team.name}
+                  key={team.name}
+                  columnHeaders={team.devs}
+                  rowHeaders={weekDates}
+                  isEditable="true"
+                  onCellChanged={handlePlanningChange}
+                >
+                  {getPlansAs2dArray(team.name, team.devs)}
+                </GenericTable>
+                <Button onClick={e => recalculatePlan(team.name)} variant="contained" color="primary">
+                  re-calculate plans <br />
+                  for {team.name}
+                </Button>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
       </TabPanel>
     </div>
   );
