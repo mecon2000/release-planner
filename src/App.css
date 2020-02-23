@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  background-color: #282c34;
+  background-color: gray;
 }
 
 .App-logo {
@@ -23,42 +23,58 @@ body {
 
 .Table {
   display: grid;
-  grid-template-columns:  repeat(5, [col] 150px ) ;
-  grid-template-rows: repeat(3, [row] auto  );
-  border:2px solid white;
-  
+  grid-template-columns: repeat(5, [col] 150px);
+  grid-template-rows: repeat(3, [row] auto);
+  border: 2px solid white;
 }
 
-Th {
-  text-align:left;
+th {
+  text-align: left;
+  color: #647753;
+  background-color: rgb(204, 204, 204);
 }
 
-Td {
-  text-align:left;
+/* TODO: make it work */
+tr:hover {
+  background-color: rgb(0, 224, 204);
+}
+
+/* TODO: make it work */
+tr:nth-child(even) {
+  background-color: rgb(0, 219, 219);
+}
+
+td {
+  text-align: left;
+  background-color: rgb(232, 232, 232);
 }
 
 .OneCell {
   color: white;
-  border:1px solid white;
+  border: 1px solid white;
 }
 
 .RowHeader {
   color: white;
-  grid-column: col ;
+  grid-column: col;
   column-width: 300px;
-  border:1px solid white;
+  border: 1px solid white;
 }
 
-h1 {
+h2 {
   color: rgba(255, 255, 255, 0.753);
-  
 }
 
-.responsiveTable td {
+.horizontallyStackedTable {
+  display: inline-block;
+  padding-right: 40px;
+}
+
+.horizontallyStackedTable td {
   color: white;
 }
 
-.responsiveTable thead tr {
+.horizontallyStackedTable thead tr {
   color: salmon;
 }
 
@@ -68,4 +84,11 @@ h1 {
 
 .epicsTab {
   font-size: 5px;
+}
+
+
+.scrolling {
+  overflow-x:auto;
+  width: 3000px;
+  text-align: left;
 }
