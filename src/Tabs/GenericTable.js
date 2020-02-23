@@ -1,4 +1,5 @@
 import React from 'react';
+import './GenericTable.css';
 
 export function GenericTable(props) {
   const row = [];
@@ -97,13 +98,10 @@ export function GenericTable(props) {
     e.target.innerText = e.target.innerText.replace('\n', '');
   };
 
-  //TODO replace <u> with css style
   return (
     <React.Fragment>
-      <h3 align="left">
-        <u>{props.title}</u>
-      </h3>
-      <table style={{ border: '1px solid red' }}>
+      <h3 align="left">{props.title}</h3>
+      <table>
         <thead>
           <tr>
             {props.rowHeaders && <th />}
