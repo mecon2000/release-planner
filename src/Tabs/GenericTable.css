@@ -4,12 +4,14 @@ table {
 
 h3 {
     text-decoration: underline;
+    text-transform: capitalize;
 }
 
 th {
     text-align: left;
     color: #626f56;
     background-color: rgb(204, 204, 204);
+    text-transform: capitalize;
   }
   
   /* TODO: make it work */
