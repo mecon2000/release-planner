@@ -271,7 +271,7 @@ export default function TabsContainer() {
                 >
                   {getPlansAs2dArray(team.name, team.devs)}
                 </GenericTable>
-                <Button onClick={e => recalculatePlan(team.name)} variant="contained" color="primary">
+                <Button size="small" onClick={e => recalculatePlan(team.name)} variant="contained" color="primary">
                   re-calculate plans <br />
                   for {team.name}
                 </Button>

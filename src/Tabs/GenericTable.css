@@ -5,6 +5,7 @@ table {
 h3 {
     text-decoration: underline;
     text-transform: capitalize;
+    text-align: center;
 }
 
 th {
