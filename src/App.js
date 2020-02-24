@@ -214,7 +214,7 @@ export default function TabsContainer() {
           <GenericTable
             title={team.name}
             key={team.name}
-            columnHeaders={weekDates}
+              columnHeaders={weekDates.map(w=>w.startingDate)}
             rowHeaders={team.devs}
             isEditable="true"
             onCellChanged={handleCapacityChange}
@@ -265,7 +265,7 @@ export default function TabsContainer() {
                   title={team.name}
                   key={team.name}
                   columnHeaders={team.devs}
-                  rowHeaders={weekDates}
+                  rowHeaders={weekDates.map(w=>w.startingDate)}
                   isEditable="true"
                   onCellChanged={handlePlanningChange}
                 >

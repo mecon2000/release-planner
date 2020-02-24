@@ -12,14 +12,6 @@ h2 {
   padding-right: 40px;
 }
 
-.horizontallyStackedTable td {
-  color: rgb(58, 58, 58);
-}
-
-.horizontallyStackedTable thead tr {
-  color: salmon;
-}
-
 .epicsTab {
   font-size: 5px;
 }
