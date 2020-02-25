@@ -1,10 +1,10 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
-import { useStyles } from "./GeneralStyles.js";
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import "./App.css";
+import { useStyles } from './GeneralStyles.js';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import './App.css';
 
 export function DataAdder(props) {
   const classes = useStyles();
@@ -19,15 +19,15 @@ export function DataAdder(props) {
   props.fields.forEach((placeholderText, index) => {
     fieldElements.push(
       <Input
-        key={"key" + index}
-        name={"field" + index}
+        key={'key' + index}
+        name={'field' + index}
         onChange={handleInputChanged}
         placeholder={placeholderText}
         className={classes.input}
         color="primary"
         variant="outlined"
         required={true}
-        inputProps={{ "aria-label": "description" }}
+        inputProps={{ 'aria-label': 'description' }}
       />
     );
   });
@@ -35,11 +35,7 @@ export function DataAdder(props) {
   return (
     <React.Fragment>
       {fieldElements}
-      <Button
-        onClick={e => props.onAddClicked(e, inputData)}
-        variant="contained"
-        color="primary"
-      >
+      <Button onClick={e => props.onAddClicked(e, inputData)} variant="contained" color="primary">
         Add
       </Button>
     </React.Fragment>
