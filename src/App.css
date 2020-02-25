@@ -1,71 +1,24 @@
 body {
   text-align: center;
-  background-color: #282c34;
+  background-color: gray;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  min-height: 40vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-}
-
-.Table {
-  display: grid;
-  grid-template-columns:  repeat(5, [col] 150px ) ;
-  grid-template-rows: repeat(3, [row] auto  );
-  border:2px solid white;
-  
-}
-
-Th {
-  text-align:left;
-}
-
-Td {
-  text-align:left;
-}
-
-.OneCell {
-  color: white;
-  border:1px solid white;
-}
-
-.RowHeader {
-  color: white;
-  grid-column: col ;
-  column-width: 300px;
-  border:1px solid white;
-}
-
-h1 {
+h2 {
   color: rgba(255, 255, 255, 0.753);
-  
 }
 
-.responsiveTable td {
-  color: white;
-}
-
-.responsiveTable thead tr {
-  color: salmon;
-}
-
-.addingNewItem {
-  padding: 100px;
+.horizontallyStackedTable {
+  display: inline-block;
+  padding-right: 40px;
 }
 
 .epicsTab {
   font-size: 5px;
+}
+
+
+.scrolling {
+  overflow-x:auto;
+  width: 3000px;
+  text-align: left;
 }
