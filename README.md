@@ -29,11 +29,20 @@ A small react app to help plan a release in our version of Agile.
 4. V Table should be filled with data taken from json ( how should the DB look?)
 5. V Table should be editable
 6. V Table should write to json after each change
-7. In Capacity table, header should contain start week date, not w<number>.
-8. Planning table: An empty table with  sprints (y axis) and names (x axis)
-9. Data for planning table should be taken from json. 
-10. Epics table: each row is an epic, coloumns are days needed for FE, BE, FS, Core, Element, ALG.
-11.	Data should be served and saved via C# server instead of firebase.
-12. Add a button “re-calculate” to fill planning table.
+7. V In Capacity table, header should contain start week date, not w<number>.
+8. V Planning table: An empty table with  sprints (y axis) and names (x axis)
+9. V Data for planning table should be taken from json. 
+10. V Epics table: each row is an epic, coloumns are days needed for FE, BE, FS, Core, Element, ALG.
+11.	V Data should be served and saved via C# server instead of firebase.
+12. V Add a button “re-calculate” to fill planning table.
 
+After showing Mike:
+13. in planning tab: color the epics,
+14. in planning tab: add number of days for each block,
+15. separate names and skillset
+16. add bins for each epic+skillset. clicking on block will erase it, increasing it's days in the relevany bin,
+17. capacity should be by sprint, not by weeks
+18. in planning tab: add lines showing start/end of releases
+19. when calculating - think of each block as 80% of 1 week (=4d instead of 5d). 80% should be a variable, allowing to change.
+20. join blocks into 1 big polygon, showing epics as bigger blocks. (tetris-like shapes)
 
