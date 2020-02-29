@@ -1,40 +1,42 @@
 import React from 'react';
 import './GenericTable.css';
 
+//TODO: is there a way to avoid global?
+let uniqueValues = {}
+
 export function GenericTable(props) {
   const row = [];
+
   const createRows = () => {
     //TODO: perhaps can unite if?
     props.rowHeaders
-      ? props.rowHeaders.forEach((element, rowNumber) => {
+      ? props.rowHeaders.forEach((rowHeader, rowNumber) => {
           row.push(
             <tr key={rowNumber}>
-              <th>{element}</th>
-              {props.children[rowNumber] && Array.isArray(props.children[rowNumber]) ? (
-                props.children[rowNumber].map((cell, columnNumber) => {
-                  return (
-                    <td
-                      key={columnNumber}
-                      contentEditable={props.isEditable}
-                      suppressContentEditableWarning={true}
-                      onKeyUp={e => onCellKeyUp(e, element, props.columnHeaders[columnNumber])}
-                      onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
-                    >
-                      {cell}
-                    </td>
-                  );
-                })
-              ) : (
-                <td
-                  key={rowNumber}
-                  contentEditable={props.isEditable}
-                  suppressContentEditableWarning={true}
-                  onKeyUp={e => onCellKeyUp(e, element, 0)}
-                  onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
-                >
-                  {element}>{props.children[rowNumber]}
-                </td>
-              )}
+              <th>{rowHeader}</th>
+              {props.children[rowNumber] && Array.isArray(props.children[rowNumber])
+                ? props.children[rowNumber].map((cell, columnNumber) => {
+                    return (
+                      <td {...getColorAttributesByContent(cell)}
+                        key={columnNumber}
+                        {...getEditingAttributes({
+                          rowHeader,
+                          columnHeader: props.columnHeaders[columnNumber]
+                        })}
+                      >
+                        {cell}
+                      </td>
+                    );
+                  })
+                : //row is not an array, meaning it's either a single element (TODO: this case is not implemented)
+                  //or an empty element (= has to put a row of '-')
+                  props.columnHeaders.map((columnHeader, columnNumber) => {
+                    return (
+                      <td key={columnNumber} {...getEditingAttributes({ rowHeader: rowHeader, columnHeader })}>
+                        -
+                      </td>
+                    );
+                  })}
             </tr>
           );
         })
@@ -46,21 +48,17 @@ export function GenericTable(props) {
                   return (
                     <td
                       key={columnNumber}
-                      contentEditable={props.isEditable}
-                      onKeyUp={e => onCellKeyUp(e, rowNumber, props.columnHeaders[columnNumber])}
-                      onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, columnNumber)}
+                      {...getEditingAttributes({
+                        rowHeader: rowNumber,
+                        columnHeader: props.columnHeaders[columnNumber]
+                      })}
                     >
                       {cell}
                     </td>
                   );
                 })
               ) : (
-                <td
-                  key={rowNumber}
-                  contentEditable={props.isEditable}
-                  onKeyUp={e => onCellKeyUp(e, rowNumber, 0)}
-                  onKeyDown={e => onCellKeyDown(e, props.title, rowNumber, 0)}
-                >
+                <td key={rowNumber} {...getEditingAttributes({ rowHeader: rowNumber, columnHeader: 0 })}>
                   {element}
                 </td>
               )}
@@ -71,12 +69,40 @@ export function GenericTable(props) {
     return row;
   };
 
-  const cellsInitValue = { tableName: '', value: '', x: -1, y: -1 };
+  
+  const getColorAttributesByContent = (cellValue) => {
+    if (!props.ColorByValue || !cellValue) return {}
+    if (!uniqueValues[props.title]) uniqueValues[props.title] = []
+
+    let existingValue = uniqueValues[props.title].find(v=>v.value === cellValue)
+    if (!existingValue) {
+      const maxColorNumber = 12
+      const colorId = uniqueValues[props.title].length % maxColorNumber;
+      existingValue = {value:cellValue, colorId}
+      uniqueValues[props.title].push(existingValue);
+    }
+    return {className : 'colorId'+existingValue.colorId }
+  }
+
+  const getEditingAttributes = ({ rowHeader, columnHeader }) => {
+    return {
+      contentEditable: props.isEditable,
+      suppressContentEditableWarning: true,
+      onKeyUp: e => onCellKeyUp(e, rowHeader, columnHeader),
+      onKeyDown: e => onCellKeyDown(e, props.title, rowHeader, columnHeader)
+    };
+  };
+
+  const cellsInitValue = { tableName: '', value: '', rowHeader: '', columnHeader: '' };
   const [cellsPreviousValue, setCellsPreviousValue] = React.useState(cellsInitValue);
 
-  const onCellKeyDown = (e, tableName, x, y) => {
-    if (x !== cellsPreviousValue.x || y !== cellsPreviousValue.y || tableName !== cellsPreviousValue.tableName) {
-      setCellsPreviousValue({ tableName, value: e.target.innerText, x, y });
+  const onCellKeyDown = (e, tableName, rowHeader, columnHeader) => {
+    if (
+      rowHeader !== cellsPreviousValue.rowHeader ||
+      columnHeader !== cellsPreviousValue.columnHeader ||
+      tableName !== cellsPreviousValue.tableName
+    ) {
+      setCellsPreviousValue({ tableName, value: e.target.innerText, rowHeader: rowHeader, columnHeader: columnHeader });
     }
   };
 

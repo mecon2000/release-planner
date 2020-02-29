@@ -147,7 +147,7 @@ export default function TabsContainer() {
     devsInTeam.forEach(dev => {
       const epic = weekData && weekData.epics.find(e => e.dev.toLowerCase() === dev.toLowerCase());
       const epicTheDevIsWorkingOnThisWeek = epic && epic.epicName;
-      weekRow.push(epicTheDevIsWorkingOnThisWeek ? epicTheDevIsWorkingOnThisWeek : '-');
+      weekRow.push(epicTheDevIsWorkingOnThisWeek ? epicTheDevIsWorkingOnThisWeek : null);
     });
     return weekRow;
   };
@@ -268,6 +268,7 @@ export default function TabsContainer() {
                   rowHeaders={weekDates.map(w=>w.startingDate)}
                   isEditable="true"
                   onCellChanged={handlePlanningChange}
+                  ColorByValue="true"
                 >
                   {getPlansAs2dArray(team.name, team.devs)}
                 </GenericTable>
