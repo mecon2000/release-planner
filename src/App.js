@@ -144,13 +144,41 @@ export default function TabsContainer() {
 
   const create1weekRow = (devsInTeam, weekData) => {
     let weekRow = [];
+    let colorId = 0;
     devsInTeam.forEach(dev => {
       const epic = weekData && weekData.epics.find(e => e.dev.toLowerCase() === dev.toLowerCase());
       const epicTheDevIsWorkingOnThisWeek = epic && epic.epicName;
-      weekRow.push(epicTheDevIsWorkingOnThisWeek ? epicTheDevIsWorkingOnThisWeek : null);
+      if (epicTheDevIsWorkingOnThisWeek) {
+      const cell = {data: epicTheDevIsWorkingOnThisWeek, colorId}
+      colorId = (colorId+1) % 12;
+      weekRow.push(cell);
+      } else weekRow.push(null); 
     });
     return weekRow;
   };
+//TODO: is there a way to avoid global?
+let uniqueValues = {}
+
+
+//UNCOMENT AND USE IN create1weekRow
+  
+  // const getColorAttributesByContent = (cellValue) => {
+  //   if (!props.ColorByValue || !cellValue) return {}
+  //   if (!uniqueValues[props.title]) uniqueValues[props.title] = []
+
+  //   let existingValue = uniqueValues[props.title].find(v=>v.value === cellValue)
+  //   if (!existingValue) {
+  //     const maxColorNumber = 12
+  //     const colorId = uniqueValues[props.title].length % maxColorNumber;
+  //     existingValue = {value:cellValue, colorId}
+  //     uniqueValues[props.title].push(existingValue);
+  //   }
+  //   return {className : 'colorId'+existingValue.colorId }
+  // }
+
+
+
+
 
   //TODO implement! should take earliest release startdate, and latest release endDate,
   //and transform their dates into week number

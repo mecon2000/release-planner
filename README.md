@@ -46,7 +46,7 @@ This was required by Mike B, so it concentrates on planning per group.
 12. V Add a button “re-calculate” to fill planning table.
 
 After showing Mike:
-13. in planning tab: color the epics,
+13. V in planning tab: color the epics,
 14. in planning tab: add number of days for each block,
 15. separate names and skillset
 16. add bins for each epic+skillset. clicking on block will erase it, increasing it's days in the relevany bin,

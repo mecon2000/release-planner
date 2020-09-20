@@ -1,9 +1,6 @@
 import React from 'react';
 import './GenericTable.css';
 
-//TODO: is there a way to avoid global?
-let uniqueValues = {}
-
 export function GenericTable(props) {
   const row = [];
 
@@ -17,14 +14,14 @@ export function GenericTable(props) {
               {props.children[rowNumber] && Array.isArray(props.children[rowNumber])
                 ? props.children[rowNumber].map((cell, columnNumber) => {
                     return (
-                      <td {...getColorAttributesByContent(cell)}
+                      <td {...getClassNameByColor(cell)}
                         key={columnNumber}
                         {...getEditingAttributes({
                           rowHeader,
                           columnHeader: props.columnHeaders[columnNumber]
                         })}
                       >
-                        {cell}
+                        {cell?.data? cell.data :cell}
                       </td>
                     );
                   })
@@ -69,19 +66,11 @@ export function GenericTable(props) {
     return row;
   };
 
-  
-  const getColorAttributesByContent = (cellValue) => {
-    if (!props.ColorByValue || !cellValue) return {}
-    if (!uniqueValues[props.title]) uniqueValues[props.title] = []
+  //className={"colorId"+cell.colorId}
 
-    let existingValue = uniqueValues[props.title].find(v=>v.value === cellValue)
-    if (!existingValue) {
-      const maxColorNumber = 12
-      const colorId = uniqueValues[props.title].length % maxColorNumber;
-      existingValue = {value:cellValue, colorId}
-      uniqueValues[props.title].push(existingValue);
-    }
-    return {className : 'colorId'+existingValue.colorId }
+  const getClassNameByColor = (cell) => {
+    if (!cell || typeof cell ==='string') return {}
+    return {className : 'colorId'+cell.colorId }
   }
 
   const getEditingAttributes = ({ rowHeader, columnHeader }) => {
