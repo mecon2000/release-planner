@@ -1,4 +1,13 @@
 A small react app to help plan a release in our version of Agile.
+To launch it you'll need:
+1. to launch the BE  (which is https://github.com/mecon2000/release-planner-express-server)
+2. to Make sure FireBase Realtime DB is running (which is https://console.firebase.google.com/u/0/project/releaseplanner-902dc/database/releaseplanner-902dc/data )
+
+This was required by Mike B, so it concentrates on planning per group. 
+(In contrast to planning for whole R&D, as Amir sees it)
+
+
+----
 
 ```Which entities do we have?```
 1. Group {Name}
